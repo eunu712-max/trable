@@ -4,7 +4,7 @@ on:
     paths: ['dl/urls.txt']
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 jobs:
   fetch:
     runs-on: ubuntu-latest
@@ -18,7 +18,8 @@ jobs:
             curl -sSL -m 40 -A "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Safari/604.1" -o "dl/out/$name" "$url" || echo "fail $name"
           done < dl/urls.txt
           ls -la dl/out
-      - name: commit
-        run: |
-          git config user.name "eunu712-max"; git config user.email "eunu712@gmail.com"
-          git add dl/out; git commit -m "이미지 받아오기" || exit 0; git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: imgs
+          path: dl/out
+          retention-days: 1
