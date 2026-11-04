@@ -1,0 +1,24 @@
+name: fetch-images
+on:
+  push:
+    paths: ['dl/urls.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: download
+        run: |
+          mkdir -p dl/out
+          while read -r name url; do
+            [ -z "$name" ] && continue
+            curl -sSL -m 40 -A "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Safari/604.1" -o "dl/out/$name" "$url" || echo "fail $name"
+          done < dl/urls.txt
+          ls -la dl/out
+      - name: commit
+        run: |
+          git config user.name "eunu712-max"; git config user.email "eunu712@gmail.com"
+          git add dl/out; git commit -m "이미지 받아오기" || exit 0; git push
