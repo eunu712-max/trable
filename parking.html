@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="인천주차">
+<title>인천 T1 주차 빈자리</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,"Apple SD Gothic Neo",sans-serif;background:#0f1115;color:#f2f3f5;padding:14px 14px 40px}
+h1{font-size:19px;margin:4px 0 2px}.sub{color:#9aa0aa;font-size:13px;margin-bottom:12px}
+.tabs{display:flex;gap:8px;margin-bottom:12px}.tab{flex:1;padding:12px;border-radius:12px;border:0;font-size:16px;font-weight:700;background:#1b1e25;color:#cfd3da}
+.tab.on{background:#ff5a3c;color:#fff}
+.row{background:#1b1e25;border-radius:14px;padding:14px;margin-bottom:10px}
+.top{display:flex;justify-content:space-between;align-items:baseline}.name{font-size:16px;font-weight:600}
+.num{font-size:30px;font-weight:800}.num small{font-size:14px;font-weight:600;color:#9aa0aa;margin-left:2px}
+.bar{height:8px;background:#2a2e37;border-radius:6px;margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;border-radius:6px}
+.g{color:#3ddc84}.y{color:#ffc542}.r{color:#ff5a5a}
+.btn{width:100%;padding:15px;border:0;border-radius:14px;font-size:17px;font-weight:800;background:#2d6cff;color:#fff;margin-top:6px}
+.at{text-align:center;color:#9aa0aa;font-size:13px;margin:10px 0}.err{background:#3a1d1d;color:#ffb4b4;padding:12px;border-radius:12px;font-size:14px}
+.tip{color:#9aa0aa;font-size:12.5px;line-height:1.5;margin-top:14px}
+</style>
+</head>
+<body>
+<h1>🅿️ 인천공항 T1 빈자리</h1>
+<div class="sub">공항 공식 데이터를 열 때마다 바로 가져와요 · 30초마다 자동 갱신</div>
+<div class="tabs"><button class="tab on" data-k="short">단기 (터미널 앞)</button><button class="tab" data-k="long">장기 (셔틀)</button></div>
+<div id="list"><div class="at">불러오는 중…</div></div>
+<div class="at" id="at"></div>
+<button class="btn" id="re">🔄 지금 새로고침</button>
+<div class="tip">• 단기: 터미널 바로 앞(걸어서 5분) · 장기: 무료 셔틀 5~10분<br>• 매일 5~8시, 16~19시 혼잡 예상 (공항 안내)<br>• 출처: 인천국제공항 공식 홈페이지 주차장 혼잡도</div>
+<script>
+const URL_={short:"https://airport.kr/ap_ko/964/subview.do",long:"https://airport.kr/ap_ko/965/subview.do"};
+let cur=(location.hash==="#long")?"long":"short",data={},busy=false;
+const $=s=>document.querySelector(s);
+function parse(html){const d=new DOMParser().parseFromString(html,"text/html");
+  const at=(d.body.textContent.match(/마지막 업데이트\s*:?\s*([\d.]+\s+[\d:]+)/)||[])[1]||"";
+  const rows=[...d.querySelectorAll(".num-noti")].map(n=>{const nm=(n.querySelector(".num-txt span")||{}).textContent||"";
+    const st=(n.querySelector(".num-txt strong")||{}).textContent||"";const w=n.querySelector(".num-line span");
+    const pct=w?parseInt((w.getAttribute("style")||"").replace(/\D/g,""))||0:0;
+    const m=st.replace(/,/g,"").match(/(\d+)/);return{name:nm.trim(),n:m?+m[1]:null,txt:st.trim(),pct}}).filter(r=>r.name);
+  return{at,rows}}
+async function load(k){const r=await fetch(URL_[k]+"?_="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error(r.status);return parse(await r.text())}
+function color(r){if(r.n===null)return"r";if(r.n<30||r.pct>=95)return"r";if(r.n<150||r.pct>=85)return"y";return"g"}
+function render(){const v=data[cur];document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.k===cur));
+  if(!v){$("#list").innerHTML='<div class="at">불러오는 중…</div>';return}
+  if(v.err){$("#list").innerHTML='<div class="err">공항 서버에서 못 가져왔어요 ('+v.err+'). 새로고침을 눌러주세요.</div>';return}
+  const tot=v.rows.reduce((a,r)=>a+(r.n||0),0);
+  $("#list").innerHTML='<div class="row"><div class="top"><span class="name">전체 합계</span><span class="num">'+tot.toLocaleString()+'<small>대</small></span></div></div>'+
+   v.rows.map(r=>{const c=color(r);return '<div class="row"><div class="top"><span class="name">'+r.name+'</span><span class="num '+c+'">'+(r.n===null?r.txt:r.n.toLocaleString()+'<small>대</small>')+'</span></div><div class="bar"><i style="width:'+r.pct+'%;background:'+(c==="g"?"#3ddc84":c==="y"?"#ffc542":"#ff5a5a")+'"></i></div></div>'}).join("");
+  $("#at").textContent="공항 기준 "+v.at+" · 가져온 시각 "+new Date().toLocaleTimeString("ko-KR")}
+async function refresh(){if(busy)return;busy=true;$("#re").textContent="⏳ 가져오는 중…";
+  await Promise.all(["short","long"].map(async k=>{try{data[k]=await load(k)}catch(e){data[k]={err:String(e.message||e)}}}));
+  busy=false;$("#re").textContent="🔄 지금 새로고침";render()}
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{cur=b.dataset.k;history.replaceState(null,"","#"+cur);render()});
+$("#re").onclick=refresh;render();refresh();setInterval(refresh,30000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)refresh()});
+</script>
+</body>
+</html>
