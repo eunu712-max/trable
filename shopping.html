@@ -31,28 +31,30 @@ h2{font-size:21px;margin:0 0 3px;letter-spacing:-.4px}
 h2 small{display:block;font-size:12.5px;font-weight:400;color:var(--sub);margin-top:3px}
 h2::after{content:"";display:block;width:62px;height:7px;margin-top:7px;
   background:repeating-linear-gradient(90deg,var(--gold) 0 7px,transparent 7px 14px)}
-h3{font-size:16px;margin:24px 0 2px;padding-left:11px;border-left:5px solid var(--line)}
+h3{font-size:16px;margin:26px 0 2px;padding-left:11px;border-left:5px solid var(--line)}
 h3 span{font-weight:400;font-size:12.5px;color:var(--sub)}
+h4{font-size:14px;margin:20px 0 9px;color:var(--accent)}
 .note{color:var(--sub);font-size:13px;margin:9px 0 13px}
 .note b{color:var(--ink)}
 .card{display:flex;gap:12px;background:var(--card);border:2px solid var(--line);
-  border-radius:14px;padding:11px;margin-bottom:11px;align-items:flex-start}
-.card img{width:78px;height:78px;flex:0 0 78px;object-fit:contain;
+  border-radius:14px;padding:10px;margin-bottom:9px;align-items:center}
+.card img{width:70px;height:70px;flex:0 0 70px;object-fit:contain;
   background:#F4F1EC;border-radius:9px}
 .b{min-width:0;flex:1}
-.jp{font-weight:800;font-size:15px;letter-spacing:-.2px;word-break:break-all}
-.kr{font-size:13.5px;color:var(--sub);margin-top:1px}
-.row{margin-top:6px;font-size:12.5px;display:flex;flex-wrap:wrap;gap:5px}
+.jp{font-weight:800;font-size:14.5px;letter-spacing:-.2px;word-break:break-all}
+.kr{font-size:13px;color:var(--sub);margin-top:1px}
+.row{margin-top:5px;font-size:12.5px;display:flex;flex-wrap:wrap;gap:5px}
 .tag{background:var(--soft);padding:2px 8px;border-radius:999px;white-space:nowrap}
 .price{background:#1B2A4A;color:#fff;padding:2px 9px;border-radius:999px;font-weight:700}
 .save{background:#FFF0D9;color:#8A6D12;padding:2px 8px;border-radius:999px;font-weight:700}
 .hot{border-color:var(--accent)}
 .hot .jp::before{content:"★ ";color:var(--accent)}
-table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;
+table{width:100%;border-collapse:collapse;font-size:12.5px;background:#fff;
   border:2px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:12px}
-th{background:var(--line);color:#fff;padding:8px 6px;text-align:left;font-size:12px}
-td{padding:8px 6px;border-top:1px solid #E6E1D8}
+th{background:var(--line);color:#fff;padding:7px 5px;text-align:left;font-size:11.5px}
+td{padding:6px 5px;border-top:1px solid #E6E1D8;vertical-align:middle}
 td b{color:var(--accent)}
+td img{width:42px;height:42px;object-fit:contain;background:#F4F1EC;border-radius:7px;display:block}
 .food{display:flex;gap:12px;background:#fff;border:2px solid var(--line);
   border-radius:14px;padding:12px;margin-bottom:11px}
 .food img{width:88px;height:88px;flex:0 0 88px;object-fit:cover;border-radius:9px;background:#F4F1EC}
@@ -106,88 +108,147 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:26px 16px}
 조건: 한 매장에서 한 번에 계산 · 세전 ¥5,000 이상. (가격은 세전 대략)<br>
 <b>언제</b> — 짐 되니까 <b>11/8 아침이나 11/7 밤</b>에 몰아서.</p>
 
-<table>
-<tr><th>품명 (일본어)</th><th>한국어</th><th>가격</th></tr>
-<tr><td>ヒルマイルドクリーム 60g</td><td><b>히루마일드 피부재생 크림</b></td><td>¥1,480</td></tr>
-<tr><td>オードムーゲ</td><td>오드뮤게 토너 — 붉어짐·트러블</td><td>¥1,500</td></tr>
-<tr><td>キュレル</td><td>큐렐 바디로션 — 젖은 몸에 바로</td><td>¥1,200</td></tr>
-<tr><td>なめらかかと</td><td>고바야시 발뒤꿈치 각질 스틱</td><td>¥900</td></tr>
-<tr><td>ビオレ ザフェイス</td><td>비오레 더페이스 폼클렌저</td><td>¥700</td></tr>
-<tr><td>スキンアクア</td><td>로토 스킨아쿠아 선크림 젤</td><td>¥700</td></tr>
-<tr><td>クレンジングリサーチ</td><td>AHA 각질·화이트헤드 세안제</td><td>¥700</td></tr>
-<tr><td>キャンメイク ムチプル</td><td>캔메이크 무치푸루 립</td><td>¥700</td></tr>
-<tr><td>オーラツー ミー</td><td>오라투미 치약 복숭아 — 선물용</td><td>¥400</td></tr>
-</table>
-
+<h4>화장품 · 스킨케어</h4>
 <div class="card hot">
   <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%83%92%E3%83%AB%E3%83%9E%E3%82%A4%E3%83%AB%E3%83%89%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%A0&w=200&h=200&c=7">
-  <div class="b"><div class="jp">ヒルマイルドクリーム</div><div class="kr">히루마일드 — 약국 피부재생 크림</div>
+  <div class="b"><div class="jp">ヒルマイルドクリーム 60g</div><div class="kr">히루마일드 피부재생 크림 (제2류의약품)</div>
   <div class="row"><span class="price">¥1,480</span><span class="tag">약 12,900원</span></div></div>
 </div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%AA%E3%83%BC%E3%83%89%E3%83%A0%E3%83%BC%E3%82%B2%20%E6%8B%AD%E3%81%8D%E5%8F%96%E3%82%8A%E5%8C%96%E7%B2%A7%E6%B0%B4&w=200&h=200&c=7">
+  <div class="b"><div class="jp">オードムーゲ</div><div class="kr">오드뮤게 토너 — 붉어짐·트러블</div>
+  <div class="row"><span class="price">¥1,500</span><span class="tag">약 13,000원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%AD%E3%83%A5%E3%83%AC%E3%83%AB%20%E6%BD%A4%E6%B5%B8%E3%83%9C%E3%83%87%E3%82%A3%E3%83%AD%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3&w=200&h=200&c=7">
+  <div class="b"><div class="jp">キュレル</div><div class="kr">큐렐 바디로션 — 젖은 몸에 바로</div>
+  <div class="row"><span class="price">¥1,200</span><span class="tag">약 10,500원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E5%B0%8F%E6%9E%97%E8%A3%BD%E8%96%AC%20%E3%81%AA%E3%82%81%E3%82%89%E3%81%8B%E3%81%8B%E3%81%A8&w=200&h=200&c=7">
+  <div class="b"><div class="jp">なめらかかと</div><div class="kr">고바야시 발뒤꿈치 각질 스틱</div>
+  <div class="row"><span class="price">¥900</span><span class="tag">약 7,800원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%83%93%E3%82%AA%E3%83%AC%20%E3%82%B6%E3%83%95%E3%82%A7%E3%82%A4%E3%82%B9%20%E6%B3%A1%E6%B4%97%E9%A1%94&w=200&h=200&c=7">
+  <div class="b"><div class="jp">ビオレ ザフェイス</div><div class="kr">비오레 더페이스 폼클렌저</div>
+  <div class="row"><span class="price">¥700</span><span class="tag">약 6,100원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%B9%E3%82%AD%E3%83%B3%E3%82%A2%E3%82%AF%E3%82%A2%20%E3%83%88%E3%83%BC%E3%83%B3%E3%82%A2%E3%83%83%E3%83%97UV%E3%82%A8%E3%83%83%E3%82%BB%E3%83%B3%E3%82%B9&w=200&h=200&c=7">
+  <div class="b"><div class="jp">スキンアクア</div><div class="kr">로토 스킨아쿠아 선크림 젤</div>
+  <div class="row"><span class="price">¥700</span><span class="tag">약 6,100원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%AF%E3%83%AC%E3%83%B3%E3%82%B8%E3%83%B3%E3%82%B0%E3%83%AA%E3%82%B5%E3%83%BC%E3%83%81%20AHA%20%E6%B4%97%E9%A1%94&w=200&h=200&c=7">
+  <div class="b"><div class="jp">クレンジングリサーチ</div><div class="kr">AHA 각질·화이트헤드 세안제</div>
+  <div class="row"><span class="price">¥700</span><span class="tag">약 6,100원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%A1%E3%82%A4%E3%82%AF%20%E3%83%A0%E3%83%81%E3%83%97%E3%83%AB%E3%83%AA%E3%83%83%E3%83%97&w=200&h=200&c=7">
+  <div class="b"><div class="jp">キャンメイク ムチプル</div><div class="kr">캔메이크 무치푸루 립</div>
+  <div class="row"><span class="price">¥700</span><span class="tag">약 6,100원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%AA%E3%83%BC%E3%83%A9%E3%83%84%E3%83%BC%20%E3%83%9F%E3%83%BC%20%E3%83%94%E3%83%BC%E3%83%81&w=200&h=200&c=7">
+  <div class="b"><div class="jp">オーラツー ミー</div><div class="kr">오라투미 치약 복숭아 — 선물용</div>
+  <div class="row"><span class="price">¥400</span><span class="tag">약 3,500원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=andhoney%20%E3%83%98%E3%82%A2%E3%82%AA%E3%82%A4%E3%83%AB&w=200&h=200&c=7">
+  <div class="b"><div class="jp">&amp;honey</div><div class="kr">앤허니 헤어오일 — 젖은머리용</div>
+  <div class="row"><span class="price">¥1,500</span><span class="tag">약 13,000원</span></div></div>
+</div>
+
+<h4>약 · 파스 — 부모님용</h4>
+<div class="card hot">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%B5%E3%83%AD%E3%83%B3%E3%83%91%E3%82%B9%20%E6%B6%B2%E4%BD%93&w=200&h=200&c=7">
+  <div class="b"><div class="jp">サロンパス 液体</div><div class="kr">샤론파스 물파스 — 어른들이 제일 좋아함</div>
+  <div class="row"><span class="price">¥900</span><span class="tag">약 7,800원</span></div></div>
+</div>
+<div class="card hot">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E5%A4%AA%E7%94%B0%E8%83%83%E6%95%A3%20%E5%88%86%E5%8C%85&w=200&h=200&c=7">
+  <div class="b"><div class="jp">太田胃散 分包</div><div class="kr">오타이산 소화제 — 낱개포장이 편함</div>
+  <div class="row"><span class="price">¥1,300</span><span class="tag">약 11,300원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%83%AD%E3%82%AD%E3%82%BD%E3%83%8B%E3%83%B3%E3%83%86%E3%83%BC%E3%83%97&w=200&h=200&c=7">
+  <div class="b"><div class="jp">ロキソニンテープ</div><div class="kr">로키소닌 파스 — 근육통 (약사 상담)</div>
+  <div class="row"><span class="price">¥1,200</span><span class="tag">약 10,500원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%83%AD%E3%82%A4%E3%83%92%E3%81%A4%E3%81%BC%E8%86%8F&w=200&h=200&c=7">
+  <div class="b"><div class="jp">ロイヒつぼ膏</div><div class="kr">동전파스 — 어깨 결림</div>
+  <div class="row"><span class="price">¥1,100</span><span class="tag">약 9,600원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%83%87%E3%83%B3%E3%82%BF%E3%83%AB%20%E3%83%88%E3%83%BC%E3%82%BF%E3%83%AB%E3%82%B1%E3%82%A2&w=200&h=200&c=7">
+  <div class="b"><div class="jp">クリーンデンタル</div><div class="kr">클린덴탈 치약 — 착색·입냄새</div>
+  <div class="row"><span class="price">¥1,000</span><span class="tag">약 8,700원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%83%AD%E3%83%BC%E3%83%88%20%E7%9B%AE%E8%96%AC%20V%E3%83%AD%E3%83%BC%E3%83%88&w=200&h=200&c=7">
+  <div class="b"><div class="jp">目薬</div><div class="kr">안약 — 여러 개 쟁이는 게 국룰</div>
+  <div class="row"><span class="price">¥500~900</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%AE%E3%83%A3%E3%83%84%E3%83%93%E3%83%BC%20%E3%81%95%E3%82%89%E3%81%95%E3%82%89%E3%82%B7%E3%83%BC%E3%83%88&w=200&h=200&c=7">
+  <div class="b"><div class="jp">さらさらシート</div><div class="kr">땀·기름 제거 시트</div>
+  <div class="row"><span class="price">¥400</span><span class="tag">약 3,500원</span></div></div>
+</div>
+
+<h4>생활 · 위생</h4>
 <div class="card hot">
   <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%A6%E3%82%BF%E3%83%9E%E3%83%AD%E7%9F%B3%E3%81%91%E3%82%93&w=200&h=200&c=7">
   <div class="b"><div class="jp">ウタマロ石けん</div><div class="kr">우타마로 부분세탁 비누 — 얼룩 잘 빠짐</div>
   <div class="row"><span class="price">¥150</span><span class="tag">약 1,300원</span></div></div>
 </div>
-
-<p class="note" style="margin-top:16px"><b>약·파스 — 부모님용</b></p>
-<table>
-<tr><th>품명 (일본어)</th><th>한국어</th><th>가격</th></tr>
-<tr><td>サロンパス 液体</td><td><b>샤론파스 물파스</b> — 어른들이 제일 좋아함</td><td>¥900</td></tr>
-<tr><td>太田胃散 分包</td><td><b>오타이산 소화제</b> — 낱개포장</td><td>¥1,300</td></tr>
-<tr><td>ロキソニンテープ</td><td>로키소닌 파스 — 근육통 (약사 상담)</td><td>¥1,200</td></tr>
-<tr><td>ロイヒつぼ膏</td><td>동전파스 — 어깨 결림</td><td>¥1,100</td></tr>
-<tr><td>クリーンデンタル</td><td>클린덴탈 치약 — 착색·입냄새</td><td>¥1,000</td></tr>
-<tr><td>目薬</td><td>안약 — 여러 개 쟁이는 게 국룰</td><td>¥500~900</td></tr>
-<tr><td>さらさらシート</td><td>땀·기름 제거 시트</td><td>¥400</td></tr>
-</table>
-<div class="card hot">
-  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%B5%E3%83%AD%E3%83%B3%E3%83%91%E3%82%B9%20%E6%B6%B2%E4%BD%93&w=200&h=200&c=7">
-  <div class="b"><div class="jp">サロンパス 液体</div><div class="kr">샤론파스 물파스</div>
-  <div class="row"><span class="price">¥900</span><span class="tag">약 7,800원</span></div></div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%A8%E3%83%AA%E3%82%B9%20%E8%82%8C%E3%81%8A%E3%82%82%E3%81%84&w=200&h=200&c=7">
+  <div class="b"><div class="jp">肌おもい</div><div class="kr">하다오모이 생리대</div>
+  <div class="row"><span class="price">¥400</span><span class="tag">약 3,500원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%83%A9%E3%83%B3%E3%82%B8%E3%82%A7%E3%83%AA%E3%83%BC%E3%82%BD%E3%83%BC%E3%83%97%20%E6%B4%97%E5%89%A4&w=200&h=200&c=7">
+  <div class="b"><div class="jp">ランジェリーソープ</div><div class="kr">란제리 전용 세제</div>
+  <div class="row"><span class="price">¥500</span><span class="tag">약 4,400원</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%83%88%E3%82%A4%E3%83%AC%20%E8%8A%B3%E9%A6%99%E5%89%A4%20%E9%87%91%E6%9C%A8%E7%8A%80&w=200&h=200&c=7">
+  <div class="b"><div class="jp">金木犀 芳香剤</div><div class="kr">변기 방향제 금목서향</div>
+  <div class="row"><span class="price">¥400</span><span class="tag">약 3,500원</span></div></div>
 </div>
 <div class="card hot">
-  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E5%A4%AA%E7%94%B0%E8%83%83%E6%95%A3%20%E5%88%86%E5%8C%85&w=200&h=200&c=7">
-  <div class="b"><div class="jp">太田胃散 分包</div><div class="kr">오타이산 — 낱개포장이 편함</div>
-  <div class="row"><span class="price">¥1,300</span><span class="tag">약 11,300원</span></div></div>
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=CASIO%20%E3%83%AA%E3%83%B3%E3%82%B0%E3%82%A6%E3%82%A9%E3%83%83%E3%83%81&w=200&h=200&c=7">
+  <div class="b"><div class="jp">リングウォッチ (CASIO)</div><div class="kr">카시오 반지 시계 — 댓글 648👍 · 돈키호테</div>
+  <div class="row"><span class="price">¥10,000 전후</span><span class="save">면세10%+쿠폰</span></div></div>
 </div>
-
-<p class="note" style="margin-top:16px"><b>생활·위생</b></p>
-<table>
-<tr><th>품명 (일본어)</th><th>한국어</th><th>가격</th></tr>
-<tr><td>ウタマロ石けん</td><td><b>우타마로 부분세탁 비누</b></td><td>¥150</td></tr>
-<tr><td>肌おもい</td><td>하다오모이 생리대</td><td>¥400</td></tr>
-<tr><td>ランジェリーソープ</td><td>란제리 전용 세제</td><td>¥500</td></tr>
-<tr><td>金木犀 芳香剤</td><td>변기 방향제 금목서향</td><td>¥400</td></tr>
-<tr><td>&amp;honey</td><td>앤허니 헤어오일 — 젖은머리용</td><td>¥1,500</td></tr>
-<tr><td>リングウォッチ (CASIO)</td><td><b>카시오 반지 시계</b> — 댓글 648👍 · 돈키호테</td><td>¥10,000 전후</td></tr>
-</table>
 
 <h3>소라마치 <span>— 도보 5분, 스카이트리 밑</span></h3>
 <div class="card hot">
   <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E7%84%A1%E5%8D%B0%E8%89%AF%E5%93%81%20%E3%83%95%E3%83%AA%E3%83%BC%E3%82%BA%E3%83%89%E3%83%A9%E3%82%A4%20%E8%B1%9A%E6%B1%81&w=200&h=200&c=7">
   <div class="b"><div class="jp">フリーズドライ豚汁 (무인양품)</div>
     <div class="kr">동결건조 돈지루 — "나 믿고 10개짜리로 사와"</div>
-    <div class="row"><span class="price">¥500 (4식)</span><span class="tag">무인양품</span><span class="save">면세 10%</span></div></div>
+    <div class="row"><span class="price">¥500 (4식)</span><span class="save">면세 10%</span></div></div>
 </div>
 <div class="card">
   <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E7%84%A1%E5%8D%B0%E8%89%AF%E5%93%81%20%E3%83%90%E3%82%A6%E3%83%A0%E3%82%AF%E3%83%BC%E3%83%98%E3%83%B3&w=200&h=200&c=7">
   <div class="b"><div class="jp">バウムクーヘン (무인양품)</div>
     <div class="kr">바움쿠헨 — 1위 바나나 / 2위 홍차 / 3위 발효버터</div>
-    <div class="row"><span class="price">¥190 /개</span><span class="tag">무인양품</span></div></div>
+    <div class="row"><span class="price">¥190 /개</span></div></div>
 </div>
 
 <h3>긴시초 아르카키트 <span>— 한 정거장, 6층</span></h3>
-<div class="card">
-  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=GU%20%E3%83%91%E3%82%B8%E3%83%A3%E3%83%9E%20%E3%83%AB%E3%83%BC%E3%83%A0%E3%82%A6%E3%82%A7%E3%82%A2&w=200&h=200&c=7">
-  <div class="b"><div class="jp">GU パジャマ</div><div class="kr">GU 잠옷 — 한국 1/3 가격</div>
-    <div class="row"><span class="price">¥1,990~2,990</span><span class="save">면세10%+앱쿠폰</span></div></div>
-</div>
 <div class="card hot">
   <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%83%A6%E3%83%8B%E3%82%AF%E3%83%AD%20%E3%82%AB%E3%82%B7%E3%83%9F%E3%83%A4%20%E3%82%AB%E3%83%BC%E3%83%87%E3%82%A3%E3%82%AC%E3%83%B3&w=200&h=200&c=7">
   <div class="b"><div class="jp">カシミヤカーディガン (유니클로)</div>
     <div class="kr">100% 캐시미어 — 면세 받으면 가성비 최고</div>
     <div class="row"><span class="price">¥9,990~12,900</span><span class="save">면세10%+앱쿠폰</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=GU%20%E3%83%91%E3%82%B8%E3%83%A3%E3%83%9E%20%E3%83%AB%E3%83%BC%E3%83%A0%E3%82%A6%E3%82%A7%E3%82%A2&w=200&h=200&c=7">
+  <div class="b"><div class="jp">GU パジャマ</div><div class="kr">GU 잠옷 — 한국 1/3 가격</div>
+    <div class="row"><span class="price">¥1,990~2,990</span><span class="save">면세10%+앱쿠폰</span></div></div>
 </div>
 
 <h3>맛집 <span>— 전부 도보권</span></h3>
@@ -234,7 +295,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:26px 16px}
 </div>
 
 <h3>불가리 긴자타워 <span>— 긴자 2초메</span></h3>
-<p class="note">표의 <b>실부담</b>은 일본정가 → 10% 환급 → 한국 세금 → 자진신고 30% 감면까지 계산한 최종 금액.
+<p class="note"><b>실부담</b> = 일본정가 → 10% 환급 → 한국 세금 → 자진신고 30% 감면까지 계산한 최종 금액.
 전부 2026-11-05 양국 공홈 직접 확인.<br>
 <b>할인</b> 면세 10%만. 백화점 5% 쿠폰은 명품 브랜드 전부 제외입니다.</p>
 
@@ -246,15 +307,21 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:26px 16px}
       <span class="tag">한국 734만</span></div></div>
 </div>
 
-<p class="note" style="margin-top:16px"><b>비제로원 네크리스</b></p>
+<h4>비제로원 네크리스</h4>
 <table>
-<tr><th>품번</th><th>메탈</th><th>일본</th><th>한국</th><th>실부담</th><th>절약</th></tr>
-<tr><td>362394</td><td>WG 다이아</td><td>¥632,500</td><td>615만</td><td>542만</td><td><b>73만</b></td></tr>
-<tr><td>362344</td><td>RG 다이아</td><td>¥594,000</td><td>580만</td><td>508만</td><td><b>72만</b></td></tr>
-<tr><td>362345</td><td>YG 다이아</td><td>¥594,000</td><td>580만</td><td>508만</td><td><b>72만</b></td></tr>
-<tr><td>360310</td><td>WG</td><td>¥368,500</td><td>379만</td><td>310만</td><td><b>69만</b></td></tr>
-<tr><td>359730</td><td>YG</td><td>¥345,400</td><td>355만</td><td>290만</td><td><b>65만</b></td></tr>
-<tr><td>357255</td><td>RG</td><td>¥345,400</td><td>355만</td><td>290만</td><td><b>65만</b></td></tr>
+<tr><th>사진</th><th>품번·메탈</th><th>일본</th><th>한국</th><th>실부담</th><th>절약</th></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20B.zero1%20necklace%20white%20gold%20pave%20diamond&w=120&h=120&c=7"></td>
+  <td>362394<br>WG 다이아</td><td>¥632,500</td><td>615만</td><td>542만</td><td><b>73만</b></td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20B.zero1%20necklace%20rose%20gold%20diamond%20pendant&w=120&h=120&c=7"></td>
+  <td>362344<br>RG 다이아</td><td>¥594,000</td><td>580만</td><td>508만</td><td><b>72만</b></td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20B.zero1%20necklace%20yellow%20gold%20diamond%20pendant&w=120&h=120&c=7"></td>
+  <td>362345<br>YG 다이아</td><td>¥594,000</td><td>580만</td><td>508만</td><td><b>72만</b></td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20B.zero1%20necklace%20white%20gold&w=120&h=120&c=7"></td>
+  <td>360310<br>WG</td><td>¥368,500</td><td>379만</td><td>310만</td><td><b>69만</b></td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20B.zero1%20necklace%20yellow%20gold&w=120&h=120&c=7"></td>
+  <td>359730<br>YG</td><td>¥345,400</td><td>355만</td><td>290만</td><td><b>65만</b></td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20B.zero1%20necklace%20rose%20gold&w=120&h=120&c=7"></td>
+  <td>357255<br>RG</td><td>¥345,400</td><td>355만</td><td>290만</td><td><b>65만</b></td></tr>
 </table>
 <div class="card">
   <img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20B.zero1%20necklace%20rose%20gold%20diamond%20pendant&w=200&h=200&c=7">
@@ -264,30 +331,30 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:26px 16px}
       <span class="tag">실부담 508만</span></div></div>
 </div>
 
-<p class="note" style="margin-top:16px"><b>세르펜티 바이퍼 링</b> — 반지는 여기가 제일 낫습니다</p>
+<h4>세르펜티 바이퍼 링 — 반지는 여기가 제일 낫습니다</h4>
 <table>
-<tr><th>품번</th><th>메탈</th><th>일본</th><th>한국</th><th>실부담</th><th>절약</th></tr>
-<tr><td>AN860544</td><td>WG</td><td>¥444,400</td><td>432만</td><td>377만</td><td><b>55만</b></td></tr>
-<tr><td>AN860542</td><td>YG</td><td>¥418,000</td><td>407만</td><td>354만</td><td><b>53만</b></td></tr>
-<tr><td>AN860543</td><td>RG</td><td>¥418,000</td><td>407만</td><td>354만</td><td><b>53만</b></td></tr>
+<tr><th>사진</th><th>품번·메탈</th><th>일본</th><th>한국</th><th>실부담</th><th>절약</th></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20Serpenti%20Viper%20ring%20white%20gold&w=120&h=120&c=7"></td>
+  <td>AN860544<br>WG</td><td>¥444,400</td><td>432만</td><td>377만</td><td><b>55만</b></td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20Serpenti%20Viper%20ring%20yellow%20gold&w=120&h=120&c=7"></td>
+  <td>AN860542<br>YG</td><td>¥418,000</td><td>407만</td><td>354만</td><td><b>53만</b></td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20Serpenti%20Viper%20ring%20rose%20gold&w=120&h=120&c=7"></td>
+  <td>AN860543<br>RG</td><td>¥418,000</td><td>407만</td><td>354만</td><td><b>53만</b></td></tr>
 </table>
-<div class="card">
-  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20Serpenti%20Viper%20ring%20white%20gold&w=200&h=200&c=7">
-  <div class="b"><div class="jp">세르펜티 바이퍼 링 AN860544 (WG)</div>
-    <div class="kr">반지 중 절약액 1등</div>
-    <div class="row"><span class="price">¥444,400</span><span class="save">절약 55만</span>
-      <span class="tag">실부담 377만</span></div></div>
-</div>
 <p class="note">※ 한국에만 있는 AN859914(RG 655만)·AN859915(WG 700만)·AN860559(웨딩밴드 245만)은
 일본 공홈에 없어 비교 불가 — 매장에서 직접 물어보세요.</p>
 
-<p class="note" style="margin-top:16px"><b>세르펜티 바이퍼 네크리스</b></p>
+<h4>세르펜티 바이퍼 네크리스</h4>
 <table>
-<tr><th>품번</th><th>메탈</th><th>일본</th><th>한국</th><th>실부담</th><th>절약</th></tr>
-<tr><td>362421</td><td>YG</td><td>¥377,300</td><td>360만</td><td>318만</td><td><b>42만</b></td></tr>
-<tr><td>362190</td><td>WG 다이아</td><td>¥946,000</td><td>910만</td><td>870만</td><td>40만</td></tr>
-<tr><td>361106</td><td>YG 다이아</td><td>¥913,000</td><td>860만</td><td>832만</td><td>28만</td></tr>
-<tr><td>357794</td><td>RG 다이아</td><td>¥913,000</td><td>860만</td><td>832만</td><td>28만</td></tr>
+<tr><th>사진</th><th>품번·메탈</th><th>일본</th><th>한국</th><th>실부담</th><th>절약</th></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20Serpenti%20Viper%20necklace%20yellow%20gold&w=120&h=120&c=7"></td>
+  <td>362421<br>YG</td><td>¥377,300</td><td>360만</td><td>318만</td><td><b>42만</b></td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20Serpenti%20Viper%20necklace%20white%20gold%20diamond&w=120&h=120&c=7"></td>
+  <td>362190<br>WG 다이아</td><td>¥946,000</td><td>910만</td><td>870만</td><td>40만</td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20Serpenti%20Viper%20necklace%20yellow%20gold%20diamond&w=120&h=120&c=7"></td>
+  <td>361106<br>YG 다이아</td><td>¥913,000</td><td>860만</td><td>832만</td><td>28만</td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=BVLGARI%20Serpenti%20Viper%20necklace%20rose%20gold%20diamond&w=120&h=120&c=7"></td>
+  <td>357794<br>RG 다이아</td><td>¥913,000</td><td>860만</td><td>832만</td><td>28만</td></tr>
 </table>
 <p class="note">⚠️ 913,000엔짜리는 <b>45% 구간</b>이라 절약이 28만으로 쪼그라듭니다.
 같은 세르펜티면 <b>362421(360만대)이 42만으로 더 남습니다.</b></p>
@@ -296,24 +363,26 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:26px 16px}
 <p class="note">전부 브릴리언트컷 다이아 1석. <b>어떤 사이즈·메탈을 골라도 23~33만</b>입니다 —
 한일 정가 차이 자체가 작아요.</p>
 <table>
-<tr><th>품번</th><th>메탈·사이즈</th><th>일본</th><th>한국</th><th>실부담</th><th>절약</th></tr>
-<tr><td>B7215400</td><td>WG 라지</td><td>¥440,000</td><td>406만</td><td>373만</td><td><b>33만</b></td></tr>
-<tr><td>B7215500</td><td>YG 라지</td><td>¥412,500</td><td>380만</td><td>349만</td><td>31만</td></tr>
-<tr><td>B7215600</td><td>PG 라지</td><td>¥412,500</td><td>380만</td><td>349만</td><td>31만</td></tr>
-<tr><td>B7215900</td><td>WG 스몰</td><td>¥269,500</td><td>250만</td><td>224만</td><td>26만</td></tr>
-<tr><td>B7215800</td><td>YG 스몰</td><td>¥251,900</td><td>234만</td><td>208만</td><td>26만</td></tr>
-<tr><td>B7215700</td><td>PG 스몰</td><td>¥251,900</td><td>234만</td><td>208만</td><td>26만</td></tr>
-<tr><td>B7224515</td><td>WG 미니</td><td>¥201,300</td><td>187만</td><td>164만</td><td>23만</td></tr>
-<tr><td>B7224517</td><td>YG 미니</td><td>¥187,000</td><td>174만</td><td>151만</td><td>23만</td></tr>
-<tr><td>B7224516</td><td>PG 미니</td><td>¥187,000</td><td>174만</td><td>151만</td><td>23만</td></tr>
+<tr><th>사진</th><th>품번·사이즈</th><th>일본</th><th>한국</th><th>실부담</th><th>절약</th></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=Cartier%20d%27Amour%20pendant%20white%20gold%20large&w=120&h=120&c=7"></td>
+  <td>B7215400<br>WG 라지</td><td>¥440,000</td><td>406만</td><td>373만</td><td><b>33만</b></td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=Cartier%20d%27Amour%20pendant%20yellow%20gold%20large&w=120&h=120&c=7"></td>
+  <td>B7215500<br>YG 라지</td><td>¥412,500</td><td>380만</td><td>349만</td><td>31만</td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=Cartier%20d%27Amour%20pendant%20pink%20gold%20large&w=120&h=120&c=7"></td>
+  <td>B7215600<br>PG 라지</td><td>¥412,500</td><td>380만</td><td>349만</td><td>31만</td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=Cartier%20d%27Amour%20pendant%20white%20gold%20small&w=120&h=120&c=7"></td>
+  <td>B7215900<br>WG 스몰</td><td>¥269,500</td><td>250만</td><td>224만</td><td>26만</td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=Cartier%20d%27Amour%20pendant%20yellow%20gold%20small&w=120&h=120&c=7"></td>
+  <td>B7215800<br>YG 스몰</td><td>¥251,900</td><td>234만</td><td>208만</td><td>26만</td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=Cartier%20d%27Amour%20pendant%20pink%20gold%20small&w=120&h=120&c=7"></td>
+  <td>B7215700<br>PG 스몰</td><td>¥251,900</td><td>234만</td><td>208만</td><td>26만</td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=Cartier%20d%27Amour%20pendant%20white%20gold%20mini&w=120&h=120&c=7"></td>
+  <td>B7224515<br>WG 미니</td><td>¥201,300</td><td>187만</td><td>164만</td><td>23만</td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=Cartier%20d%27Amour%20pendant%20yellow%20gold%20mini&w=120&h=120&c=7"></td>
+  <td>B7224517<br>YG 미니</td><td>¥187,000</td><td>174만</td><td>151만</td><td>23만</td></tr>
+<tr><td><img loading="lazy" src="https://tse1.mm.bing.net/th?q=Cartier%20d%27Amour%20pendant%20pink%20gold%20mini&w=120&h=120&c=7"></td>
+  <td>B7224516<br>PG 미니</td><td>¥187,000</td><td>174만</td><td>151만</td><td>23만</td></tr>
 </table>
-<div class="card">
-  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=Cartier%20d%27Amour%20pendant%20necklace%20diamond&w=200&h=200&c=7">
-  <div class="b"><div class="jp">까르띠에 다무르 펜던트 B7215400 (WG 라지)</div>
-    <div class="kr">디아무르 중 절약액 1등</div>
-    <div class="row"><span class="price">¥440,000</span><span class="save">절약 33만</span>
-      <span class="tag">실부담 373만</span></div></div>
-</div>
 
 <h3>에르메스 긴자 <span>— 성격이 완전히 다름</span></h3>
 <p class="note">에르메스는 <b>정가 자체는 한일 차이가 1~3%뿐</b>입니다. 이득이 전부 <b>면세 10% 환급</b>에서 나와요.
@@ -378,11 +447,15 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:26px 16px}
     <div class="row"><span class="price">¥15,000~40,000</span><span class="save">면세 10%</span></div></div>
 </div>
 <div class="card">
-  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E7%84%A1%E5%8D%B0%E8%89%AF%E5%93%81%20%E9%8A%80%E5%BA%A7&w=200&h=200&c=7">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E7%84%A1%E5%8D%B0%E8%89%AF%E5%93%81%20%E9%8A%80%E5%BA%A7%E5%BA%97&w=200&h=200&c=7">
   <div class="b"><div class="jp">무인양품 긴자 본점</div><div class="kr">바움쿠헨·돈지루 — 소라마치에서 못 샀으면 여기</div>
     <div class="row"><span class="save">면세 10%</span></div></div>
 </div>
-<p class="note">옷 구경은 <b>도버스트리트마켓 긴자</b>, 구제는 <b>가바바(古着)</b>.</p>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=Dover%20Street%20Market%20Ginza&w=200&h=200&c=7">
+  <div class="b"><div class="jp">도버스트리트마켓 긴자</div><div class="kr">옷 구경 / 구제는 가바바(古着)</div>
+    <div class="row"><span class="tag">긴자 7초메</span></div></div>
+</div>
 
 <h3>츠키지 <span>— 긴자에서 두 정거장</span></h3>
 <div class="food">
@@ -424,6 +497,11 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:26px 16px}
   <b>관리법</b> — 수세미로 닦으면 바로 망가집니다. 물에 불린 다음 손으로 살살. (댓글 345👍)<br>
   ※ 다이소에 비슷한 게 100엔이라는 반론도 있음
 </div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%B9%E3%82%BF%E3%83%B3%E3%83%80%E3%83%BC%E3%83%89%E3%83%97%E3%83%AD%E3%83%80%E3%82%AF%E3%83%84%20%E4%BF%9D%E5%86%B7%E3%83%90%E3%83%83%E3%82%B0&w=200&h=200&c=7">
+  <div class="b"><div class="jp">保冷バッグ</div><div class="kr">스탠다드프로덕트 보냉백</div>
+    <div class="row"><span class="price">¥500~1,000</span></div></div>
+</div>
 <p class="note"><b>로프트 꿀팁</b> — 구석 할인·행사 코너를 보세요.
 시부야 같은 센터 지점엔 할인품이 잘 없고, 작은 지점에서 득템합니다. 고수들은 2~3개 지점을 돕니다.</p>
 
@@ -464,7 +542,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:26px 16px}
       <span class="tag">결국 면세점과 비슷해짐</span></div></div>
 </div>
 <div class="card">
-  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E4%BC%8A%E5%8B%A2%E4%B8%B9%20%E6%96%B0%E5%AE%BF&w=200&h=200&c=7">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E4%BC%8A%E5%8B%A2%E4%B8%B9%20%E6%96%B0%E5%AE%BF%E5%BA%97&w=200&h=200&c=7">
   <div class="b"><div class="jp">이세탄 신주쿠</div><div class="kr">바이레도 등 향수 — 긴자식스에서 사면 안 와도 됨</div>
     <div class="row"><span class="save">앱 REWARDS 5% + 면세 10%</span></div></div>
 </div>
@@ -480,8 +558,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:26px 16px}
   <img loading="lazy" src="https://tse1.mm.bing.net/th?q=KALDI%20%E3%82%AB%E3%83%AB%E3%83%87%E3%82%A3%20%E3%82%B8%E3%83%A3%E3%83%A0&w=200&h=200&c=7">
   <div class="b"><div class="jp">カルディ ジャム</div>
     <div class="kr">칼디 잼 — 댓글 1위 143👍 "하나만 사와서 울고 있어"</div>
-    <div class="row"><span class="price">¥500~700</span><span class="tag">칼디 · 이온</span>
-      <span class="save">이온 면세 사면 뽁뽁이 포장</span></div></div>
+    <div class="row"><span class="price">¥500~700</span><span class="tag">칼디 · 이온</span></div></div>
 </div>
 <div class="card hot">
   <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%81%AA%E3%82%81%E3%82%89%E3%81%8B%E3%83%97%E3%83%AA%E3%83%B3%20%E3%83%91%E3%82%B9%E3%83%86%E3%83%AB&w=200&h=200&c=7">
@@ -489,18 +566,38 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:26px 16px}
     <div class="kr">나메라카 푸딩 — 소비기한 짧음, <b>11/8 귀국 당일 아침에</b></div>
     <div class="row"><span class="price">¥150~300</span><span class="tag">편의점·슈퍼</span></div></div>
 </div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%AB%E3%83%AB%E3%83%87%E3%82%A3%20%E3%83%AC%E3%83%A2%E3%83%8D%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9&w=200&h=200&c=7">
+  <div class="b"><div class="jp">レモネードベース</div><div class="kr">칼디 레몬에이드 — 탄산수에 타기</div>
+    <div class="row"><span class="price">¥600</span><span class="tag">칼디</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%82%AB%E3%83%AB%E3%83%87%E3%82%A3%20%E3%83%9D%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%92%E3%83%BC&w=200&h=200&c=7">
+  <div class="b"><div class="jp">ポーションコーヒー</div><div class="kr">칼디 포션 커피 — 쓴맛 없음</div>
+    <div class="row"><span class="price">¥400</span><span class="tag">칼디</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E8%8A%8B%E3%81%91%E3%82%93%E3%81%B4&w=200&h=200&c=7">
+  <div class="b"><div class="jp">芋けんぴ</div><div class="kr">이모켄삐 (고구마 과자)</div>
+    <div class="row"><span class="price">¥300</span><span class="tag">편의점·돈키</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%81%BB%E3%82%8D%E3%82%88%E3%81%84%20%E3%82%B5%E3%83%B3%E3%83%88%E3%83%AA%E3%83%BC&w=200&h=200&c=7">
+  <div class="b"><div class="jp">ほろよい</div><div class="kr">호로요이 — 한국 미판매맛 (주류 한도 별도)</div>
+    <div class="row"><span class="price">¥160</span><span class="tag">편의점</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E6%9F%BF%E3%81%AE%E7%A8%AE%20%E3%83%9B%E3%83%AF%E3%82%A4%E3%83%88%E3%83%81%E3%83%A7%E3%82%B3&w=200&h=200&c=7">
+  <div class="b"><div class="jp">柿の種 ホワイトチョコ</div><div class="kr">카키노타네 화이트초콜릿</div>
+    <div class="row"><span class="price">¥400</span><span class="tag">편의점·돈키</span></div></div>
+</div>
+<div class="card">
+  <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%83%AD%E3%83%BC%E3%82%BD%E3%83%B3%20%E3%82%82%E3%81%A1%E3%81%B7%E3%82%88&w=200&h=200&c=7">
+  <div class="b"><div class="jp">もちぷよ</div><div class="kr">로손 모찌뿌요</div>
+    <div class="row"><span class="price">¥150</span><span class="tag">로손</span></div></div>
+</div>
 
-<table>
-<tr><th>품명 (일본어)</th><th>한국어</th><th>가격</th><th>어디서</th></tr>
-<tr><td>レモネードベース</td><td>칼디 레몬에이드 — 탄산수에 타기</td><td>¥600</td><td>칼디</td></tr>
-<tr><td>ポーションコーヒー</td><td>칼디 포션 커피 — 쓴맛 없음</td><td>¥400</td><td>칼디</td></tr>
-<tr><td>芋けんぴ</td><td>이모켄삐 (고구마 과자)</td><td>¥300</td><td>편의점·돈키</td></tr>
-<tr><td>ほろよい</td><td>호로요이 — 한국 미판매맛 (주류 한도 별도)</td><td>¥160</td><td>편의점</td></tr>
-<tr><td>柿の種 ホワイト</td><td>카키노타네 화이트초콜릿</td><td>¥400</td><td>편의점·돈키</td></tr>
-<tr><td>もちぷよ</td><td>로손 모찌뿌요</td><td>¥150</td><td>로손</td></tr>
-</table>
-
-<p class="note" style="margin-top:16px"><b>세연이용</b></p>
+<h4>세연이용</h4>
 <div class="card hot">
   <img loading="lazy" src="https://tse1.mm.bing.net/th?q=%E3%83%9F%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%89%E3%83%BC%E3%83%8A%E3%83%84%20%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3&w=200&h=200&c=7">
   <div class="b"><div class="jp">ミスド × ポケモン</div><div class="kr">미스터도넛 포켓몬 콜라보 — <b>11/6부터</b>. 역 근처 미스도</div>
@@ -512,7 +609,7 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:26px 16px}
     <div class="row"><span class="price">¥400~</span></div></div>
 </div>
 
-<p class="note" style="margin-top:16px"><b>편의점 신상 (여행 기간 판매 중)</b></p>
+<h4>편의점 신상 (여행 기간 판매 중)</h4>
 <ul>
   <li><b>로손</b> 11/2·11/3 — 치즈 듬뿍 라멘 / 버터간장 볶음우동 / 두바이 초콜릿풍 샌드 / 캐러멜 롤케이크</li>
   <li><b>패밀리마트</b> 11/3 — 명란·연어마요 왕주먹밥 / 우유 휘핑크림 도넛 4개입 / 콰트로 치즈 라자냐</li>
