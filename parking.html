@@ -48,7 +48,7 @@ function render(){const v=data[cur];document.querySelectorAll(".tab").forEach(b=
   if(v.err){$("#list").innerHTML='<div class="err">공항 서버에서 못 가져왔어요 ('+v.err+'). 새로고침을 눌러주세요.</div>';return}
   const tot=v.rows.reduce((a,r)=>a+(r.n||0),0);
   $("#list").innerHTML='<div class="row"><div class="top"><span class="name">전체 합계</span><span class="num">'+tot.toLocaleString()+'<small>대</small></span></div></div>'+
-   v.rows.map(r=>{const c=color(r);return '<div class="row"><div class="top"><span class="name">'+r.name+'</span><span class="num '+c+'">'+(r.n===null?r.txt:r.n.toLocaleString()+'<small>대</small>')+'</span></div><div class="bar"><i style="width:'+r.pct+'%;background:'+(c==="g"?"#3ddc84":c==="y"?"#ffc542":"#ff5a5a")+'"></i></div></div>'}).join("");
+   v.rows.map(r=>{const c=color(r);return '<div class="row"><div class="top"><span class="name">'+r.name+'</span><span class="num '+c+'">'+(r.n===null?r.txt:r.n.toLocaleString()+'<small>대</small>')+'</span></div></div>'}).join("");
   $("#at").textContent="공항 기준 "+v.at+" · 가져온 시각 "+new Date().toLocaleTimeString("ko-KR")}
 async function refresh(){if(busy)return;busy=true;$("#re").textContent="⏳ 가져오는 중…";
   await Promise.all(["short","long"].map(async k=>{try{data[k]=await load(k)}catch(e){data[k]={err:String(e.message||e)}}}));
