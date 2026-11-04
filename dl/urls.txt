@@ -11,3 +11,8 @@ m_pino.jpg https://images-na.ssl-images-amazon.com/images/I/71RC1l9ap7L._AC_SL15
 m_pudding.jpg https://sankin.net/upload/save_image/mka00243.jpg
 w_foodhall.jpg https://www.wbstudiotour.jp/wp-content/uploads/2023/06/フードホール_DSC2608.jpg
 w_butterbar.jpg https://www.wbstudiotour.jp/wp-content/uploads/2024/05/butterbeer-bar-2.jpg
+m_seimen.jpg https://www.tokiwa-portal.com/img/goods/L/4901990513043.jpg
+m_sapporo1.jpg https://www.sanyofoods.co.jp/wp-content/uploads/2024/02/1ff1e9fc2d91819c1fb4397e12d2fcd0.jpg
+m_donbei.jpg https://sm.r10s.jp/item/22/4902105033722.jpg
+m_cupnoodle.jpg https://jp.images-monotaro.com/Monotaro3/pi/full/mono09382152-231219-02.jpg
+m_ippei.jpg https://kyodonewsprwire.jp/prwfile/release/M101177/202206011982/_prw_PI2fl_fV3OvE94.jpg
