@@ -6,12 +6,12 @@
 <title>도쿄 쇼핑·맛집 2026.11</title>
 <style>
 :root{
-  --bg:#FBF7F1; --card:#fff; --ink:#1B2A4A; --sub:#6B7794;
-  --line:#1B2A4A; --accent:#E2574C; --gold:#C9A227; --soft:#EFE7DA;
+  --bg:#FFF6E9; --card:#fff; --ink:#1D2752; --sub:#6B7794;
+  --line:#1D2752; --accent:#F0503C; --gold:#C9A227; --soft:#F6E7CF;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:var(--bg);color:var(--ink);
-  font-family:"Apple SD Gothic Neo","Pretendard","Noto Sans KR",system-ui,sans-serif;
+  font-family:-apple-system,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",system-ui,sans-serif;
   font-size:15px;line-height:1.5;padding-bottom:60px}
 header{padding:26px 18px 18px;background:var(--bg);border-bottom:3px solid var(--line)}
 h1{margin:0 0 4px;font-size:25px;letter-spacing:-.6px}
@@ -20,7 +20,7 @@ h1 span{color:var(--accent)}
 .meta b{color:var(--ink)}
 .warn{margin:12px 18px 0;background:#FFF2F0;border-left:5px solid var(--accent);
   padding:11px 13px;border-radius:0 10px 10px 0;font-size:13.5px}
-nav{position:sticky;top:0;z-index:9;background:rgba(251,247,241,.96);
+nav{position:sticky;top:0;z-index:9;background:rgba(255,246,233,.96);
   backdrop-filter:blur(8px);border-bottom:2px solid var(--line);
   padding:10px 12px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
@@ -36,7 +36,7 @@ h3 span{font-weight:400;font-size:12.5px;color:var(--sub)}
 h4{font-size:14px;margin:20px 0 9px;color:var(--accent)}
 .note{color:var(--sub);font-size:13px;margin:9px 0 13px}
 .note b{color:var(--ink)}
-.card{display:flex;gap:12px;background:var(--card);border:2px solid var(--line);
+.card{display:flex;gap:12px;background:var(--card);border:3px solid var(--line);
   border-radius:14px;padding:10px;margin-bottom:9px;align-items:center}
 .card img{width:70px;height:70px;flex:0 0 70px;object-fit:contain;
   background:#F4F1EC;border-radius:9px}
@@ -45,24 +45,24 @@ h4{font-size:14px;margin:20px 0 9px;color:var(--accent)}
 .kr{font-size:13px;color:var(--sub);margin-top:1px}
 .row{margin-top:5px;font-size:12.5px;display:flex;flex-wrap:wrap;gap:5px}
 .tag{background:var(--soft);padding:2px 8px;border-radius:999px;white-space:nowrap}
-.price{background:#1B2A4A;color:#fff;padding:2px 9px;border-radius:999px;font-weight:700}
+.price{background:#1D2752;color:#fff;padding:2px 9px;border-radius:999px;font-weight:700}
 .save{background:#FFF0D9;color:#8A6D12;padding:2px 8px;border-radius:999px;font-weight:700}
 .hot{border-color:var(--accent)}
 .hot .jp::before{content:"★ ";color:var(--accent)}
 table{width:100%;border-collapse:collapse;font-size:12.5px;background:#fff;
-  border:2px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:12px}
+  border:3px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:12px}
 th{background:var(--line);color:#fff;padding:7px 5px;text-align:left;font-size:11.5px}
 td{padding:6px 5px;border-top:1px solid #E6E1D8;vertical-align:middle}
 td b{color:var(--accent)}
 td img{width:42px;height:42px;object-fit:contain;background:#F4F1EC;border-radius:7px;display:block}
-.food{display:flex;gap:12px;background:#fff;border:2px solid var(--line);
+.food{display:flex;gap:12px;background:#fff;border:3px solid var(--line);
   border-radius:14px;padding:12px;margin-bottom:11px}
 .food img{width:88px;height:88px;flex:0 0 88px;object-fit:cover;border-radius:9px;background:#F4F1EC}
 .star{color:var(--gold);font-weight:800;font-size:13px}
 .closed{color:var(--accent);font-weight:700;font-size:12.5px}
 ul{margin:8px 0;padding-left:19px;font-size:13.5px}
 li{margin-bottom:5px}
-.check{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px 16px}
+.check{background:#fff;border:3px solid var(--line);border-radius:14px;padding:14px 16px}
 .check label{display:block;padding:5px 0;font-size:14px}
 .plan{background:#fff;border:2px dashed var(--line);border-radius:14px;padding:13px 15px;margin:0 18px}
 .plan div{font-size:13.5px;padding:4px 0}
@@ -71,6 +71,9 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:26px 16px}
 </style>
 </head>
 <body>
+
+<a href="./tokyo.html" style="display:block;background:#1D2752;color:#fff;text-align:center;
+ padding:11px;font-weight:800;font-size:14px;text-decoration:none">← 도쿄 가족여행 앱으로</a>
 
 <header>
   <h1>도쿄 쇼핑 · 맛집 <span>2026.11.06–08</span></h1>
@@ -657,6 +660,10 @@ footer{text-align:center;color:var(--sub);font-size:12px;padding:26px 16px}
   <label><input type="checkbox"> 11/8 공항 2시간 반 전 도착</label>
 </div>
 </section>
+
+<a href="./tokyo.html" style="display:block;margin:20px 16px 0;background:#F0503C;color:#fff;
+ text-align:center;padding:14px;font-weight:800;border-radius:14px;text-decoration:none;
+ border:3px solid #1D2752">← 여행 일정 앱으로 돌아가기</a>
 
 <footer>사진은 상품 검색 결과라 실제 패키지와 다를 수 있습니다 · 주얼리 가격은 양국 공홈 2026-11-05 확인 · 나머지는 세전 대략치</footer>
 
