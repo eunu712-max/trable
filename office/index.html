@@ -7,25 +7,60 @@
 <title>슬기로운 공직생활</title>
 <link rel="stylesheet" href="../gunpo.css">
 <style>
-  .seg{display:flex;flex-wrap:wrap;gap:6px;}
-  .seg button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--mut);}
-  .seg button.on{background:var(--navy);color:#fff;border-color:var(--navy);}
-  .preview{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:4px;}
-  /* 명패/명찰 출력물 */
-  .plate{border:3px solid var(--navy);border-radius:10px;padding:26px 18px;text-align:center;background:#fff;margin:0 auto;}
-  .plate .org{color:var(--blue);font-weight:800;font-size:15px;letter-spacing:1px;margin-bottom:10px;}
-  .plate .nm{color:var(--navy);font-weight:900;font-size:40px;letter-spacing:6px;}
-  .plate .role{color:var(--ink);font-weight:700;font-size:18px;margin-top:8px;}
-  .plate .foot{color:var(--mut);font-size:12px;margin-top:14px;}
-  .badge{display:flex;gap:0;border:2px solid var(--navy);border-radius:10px;overflow:hidden;max-width:360px;margin:0 auto;}
-  .badge .l{background:var(--navy);color:#fff;width:92px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;padding:8px;}
-  .badge .r{flex:1;padding:14px;text-align:left;}
-  .badge .r .nm{font-weight:900;font-size:26px;color:var(--navy);}
-  .badge .r .role{color:var(--mut);font-weight:700;font-size:13px;margin-top:2px;}
-  @media print{
-    body{background:#fff;padding:0;} .gp-header,.wrap>.card,.actionbar,.muted,.noprint{display:none!important;}
-    .wrap{max-width:none;padding:0;} .preview{border:0;padding:0;}
-  }
+  .hero{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;border-radius:16px;padding:18px;margin-bottom:14px;}
+  .hero .brand{font-size:11px;font-weight:800;letter-spacing:2px;opacity:.85;}
+  .hero h2{margin:4px 0 4px;font-size:20px;font-weight:900;}
+  .hero p{margin:0;font-size:13px;opacity:.92;}
+  .steps{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+  .steps .s{background:rgba(255,255,255,.16);border-radius:16px;padding:5px 10px;font-size:11px;font-weight:700;}
+  .seg{display:flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:4px;}
+  .seg button{flex:1;border:none;background:#fff;padding:11px;font-size:14px;font-weight:800;color:var(--mut);}
+  .seg button.on{background:var(--navy);color:#fff;}
+  .forms{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .fm{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:12px;text-align:left;cursor:pointer;}
+  .fm.on{border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,159,224,.12);}
+  .fm .i{font-size:22px;}
+  .fm .n{font-weight:800;color:var(--navy);font-size:14px;margin-top:4px;}
+  .fm .d{font-size:11px;color:var(--mut);margin-top:2px;line-height:1.4;}
+  .filebtn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--navy);color:var(--navy);background:#fff;border-radius:10px;padding:9px 13px;font-weight:700;font-size:13px;}
+  .filebtn input{display:none;}
+  table.data{width:100%;border-collapse:collapse;margin-top:6px;}
+  table.data th,table.data td{border:1px solid var(--line);padding:4px;font-size:13px;}
+  table.data th{background:var(--sky2);color:var(--navy);font-size:12px;}
+  table.data input{border:0;width:100%;padding:6px;font-size:13px;}
+  table.data td.del{width:30px;text-align:center;}
+  table.data .x{border:0;background:none;color:var(--warn);font-weight:800;font-size:16px;}
+  /* 미리보기 출력물 */
+  .previewgrid{display:grid;gap:10px;margin-top:6px;}
+  .g-badge{grid-template-columns:1fr 1fr;}
+  .g-plate{grid-template-columns:1fr 1fr;}
+  .g-cert{grid-template-columns:1fr;}
+  .badge{border:2px solid var(--navy);border-radius:10px;overflow:hidden;display:flex;}
+  .badge .l{background:var(--navy);color:#fff;width:70px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;text-align:center;padding:6px;}
+  .badge .r{flex:1;padding:10px 12px;}
+  .badge .r .nm{font-size:22px;font-weight:900;color:var(--navy);}
+  .badge .r .dp{font-size:12px;color:var(--mut);font-weight:700;}
+  .plate{border:3px solid var(--navy);border-radius:10px;padding:18px 10px;text-align:center;}
+  .plate .org{color:var(--blue);font-weight:800;font-size:12px;}
+  .plate .nm{color:var(--navy);font-weight:900;font-size:30px;letter-spacing:4px;margin-top:4px;}
+  .plate .dp{color:var(--ink);font-weight:700;font-size:14px;margin-top:4px;}
+  .org-tree{border:1px solid var(--line);border-radius:12px;padding:14px;}
+  .org-dept{margin-bottom:12px;}
+  .org-dept .h{background:var(--navy);color:#fff;border-radius:8px;padding:7px 12px;font-weight:800;font-size:14px;display:inline-block;}
+  .org-dept .mem{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+  .org-dept .mem .m{background:var(--sky2);border-radius:8px;padding:7px 11px;font-size:13px;}
+  .org-dept .mem .m b{color:var(--navy);}
+  .call{border:1px solid var(--line);border-radius:12px;padding:12px;}
+  .call table{width:100%;border-collapse:collapse;}
+  .call th,.call td{border:1px solid var(--line);padding:7px 9px;font-size:13px;text-align:left;}
+  .call th{background:var(--sky2);color:var(--navy);}
+  .cert{border:6px double var(--navy);border-radius:6px;padding:28px 22px;text-align:center;background:#fff;}
+  .cert .t{font-size:26px;font-weight:900;letter-spacing:10px;color:var(--navy);margin-bottom:18px;}
+  .cert .who{font-size:18px;font-weight:800;margin:10px 0;}
+  .cert .body{font-size:14px;line-height:1.9;margin:14px 0;}
+  .cert .foot{margin-top:22px;font-size:15px;font-weight:800;color:var(--navy);}
+  @media print{body{background:#fff;}.gp-header,.hero,.card,.noprint,.row{display:none!important;}.wrap{max-width:none;padding:0;}
+    .previewgrid{gap:14px;}}
 </style>
 </head>
 <body>
@@ -36,64 +71,135 @@
 </div></div>
 
 <div class="wrap">
+  <div class="hero">
+    <div class="brand">GUNPO SMART OFFICE</div>
+    <h2>반복되는 서식 작업을 더 간단하게</h2>
+    <p>정보를 한 번 넣으면 명찰·명패·조직도·위촉장을 한꺼번에 뽑아요.</p>
+    <div class="steps"><span class="s">① 정보 입력·업로드</span><span class="s">② 서식 선택</span><span class="s">③ 실시간 미리보기</span><span class="s">④ 인쇄·PDF</span></div>
+  </div>
+
   <div class="card">
-    <h2><span class="dot"></span>무엇을 만들까요?</h2>
-    <div class="seg" id="kind">
-      <button data-k="plate" class="on">책상 명패</button>
-      <button data-k="badge">명찰</button>
-      <button data-k="committee">위원 명패</button>
+    <h2><span class="dot"></span>무슨 일을 하세요?</h2>
+    <div class="seg" id="mode">
+      <button data-m="office" class="on">슬기로운 서무 생활</button>
+      <button data-m="committee">슬기로운 위원회 개최</button>
     </div>
+    <div class="forms" id="forms"></div>
   </div>
 
   <div class="card">
-    <h2><span class="dot"></span>내용 입력</h2>
-    <label>소속 / 기관</label>
-    <input type="text" id="org" value="군포시청">
-    <label>이름</label>
-    <input type="text" id="name" value="홍길동">
-    <label id="roleLabel">직위 · 직급</label>
-    <input type="text" id="role" value="주무관">
-    <label>하단 문구 (선택)</label>
-    <input type="text" id="foot" placeholder="예: 독서지원팀">
+    <h2><span class="dot"></span>정보 입력</h2>
+    <div class="row" style="margin-bottom:8px">
+      <label class="filebtn">📂 엑셀/CSV 업로드<input type="file" id="file" accept=".xlsx,.xls,.csv"></label>
+      <button class="chip" id="tpl">표준 양식 내려받기</button>
+      <button class="chip" id="addRow">＋ 행 추가</button>
+      <button class="chip" id="clear">데이터 초기화</button>
+    </div>
+    <div style="overflow-x:auto"><table class="data" id="tbl"></table></div>
+    <p class="muted" id="colHint"></p>
   </div>
 
-  <div class="card noprint">
-    <h2><span class="dot"></span>미리보기</h2>
-    <div class="preview" id="preview"></div>
-    <p class="muted" style="margin-top:10px">아래 <b>인쇄</b>를 누르면 미리보기 그대로 출력돼요. PDF로 저장도 인쇄 화면에서 선택할 수 있어요.</p>
+  <div class="card">
+    <h2 class="noprint"><span class="dot"></span>실시간 미리보기 <span class="pill" id="cntPill" style="margin-left:6px">0건</span></h2>
+    <div class="previewgrid" id="preview"></div>
   </div>
 
-  <div class="row">
-    <button class="btn primary" id="print">🖨️ 인쇄 / PDF 저장</button>
+  <div class="row noprint">
+    <button class="btn primary block" id="print">🖨️ 인쇄 / PDF 저장</button>
   </div>
 </div>
+<div class="toast" id="toast"></div>
 
-<!-- 인쇄 대상 -->
-<div class="wrap" id="printArea" style="display:none"><div class="preview" id="printSlot"></div></div>
-
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" onerror="window.__noxlsx=1"></script>
 <script>
-let kind='plate';
 const $=id=>document.getElementById(id);
-function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
-function build(){
-  const org=esc($('org').value),name=esc($('name').value),role=esc($('role').value),foot=esc($('foot').value);
-  if(kind==='plate'||kind==='committee'){
-    return `<div class="plate" style="max-width:${kind==='committee'?'420px':'380px'}">
-      <div class="org">${org}</div>
-      <div class="nm">${name}</div>
-      <div class="role">${role}</div>
-      ${foot?`<div class="foot">${foot}</div>`:''}</div>`;
-  }
-  return `<div class="badge"><div class="l">${org}</div><div class="r">
-      <div class="nm">${name}</div><div class="role">${role}${foot?' · '+foot:''}</div></div></div>`;
+const SCHEMA={
+  office:{cols:['부서','직위','성명','연락처'],
+    forms:[
+      {k:'badge',i:'🪪',n:'명찰',d:'직원명·부서를 명찰에 배치'},
+      {k:'plate',i:'📛',n:'명패',d:'책상용 직원 명패 제작'},
+      {k:'org',i:'🗂️',n:'조직도',d:'직원 정보를 조직도 형태로'},
+      {k:'call',i:'📞',n:'비상연락망',d:'팀별 비상연락망 제작'},
+    ]},
+  committee:{cols:['관리번호','직위(소속)','성명','위촉기간'],
+    forms:[
+      {k:'cert',i:'📜',n:'위촉장',d:'위원별 위촉장 자동 작성'},
+      {k:'cplate',i:'📛',n:'위원 명패',d:'회의용 위원 명패 제작'},
+    ]},
+};
+let mode='office', form='badge';
+let rows={office:[],committee:[]};
+function curCols(){return SCHEMA[mode].cols;}
+function curRows(){return rows[mode];}
+
+function load(){try{const d=JSON.parse(localStorage.getItem('gp_office')||'null');if(d){rows=d.rows||rows;}}catch(e){}}
+function save(){try{localStorage.setItem('gp_office',JSON.stringify({rows}));}catch(e){}}
+load();
+
+function renderForms(){
+  $('forms').innerHTML=SCHEMA[mode].forms.map(f=>`<div class="fm${f.k===form?' on':''}" data-k="${f.k}">
+    <div class="i">${f.i}</div><div class="n">${f.n}</div><div class="d">${f.d}</div></div>`).join('');
+  $('forms').querySelectorAll('.fm').forEach(el=>el.onclick=()=>{form=el.dataset.k;renderForms();renderPreview();});
 }
-function render(){$('preview').innerHTML=build();}
-['org','name','role','foot'].forEach(id=>$(id).addEventListener('input',render));
-document.querySelectorAll('#kind button').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('#kind button').forEach(x=>x.classList.remove('on'));b.classList.add('on');kind=b.dataset.k;
-  $('roleLabel').textContent = kind==='committee'?'직위 (예: 위원장)':'직위 · 직급';render();});
-$('print').onclick=()=>{$('printSlot').innerHTML=build();$('printArea').style.display='block';window.print();setTimeout(()=>$('printArea').style.display='none',300);};
-render();
+function renderTable(){
+  const cols=curCols();
+  let h='<tr>'+cols.map(c=>`<th>${c}</th>`).join('')+'<th></th></tr>';
+  curRows().forEach((r,ri)=>{
+    h+='<tr>'+cols.map((c,ci)=>`<td><input data-r="${ri}" data-c="${ci}" value="${(r[ci]||'').replace(/"/g,'&quot;')}"></td>`).join('')+
+      `<td class="del"><button class="x" data-del="${ri}">×</button></td></tr>`;
+  });
+  $('tbl').innerHTML=h;
+  $('tbl').querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{
+    const ri=+inp.dataset.r,ci=+inp.dataset.c;curRows()[ri]=curRows()[ri]||[];curRows()[ri][ci]=e.target.value;save();renderPreview();}));
+  $('tbl').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{curRows().splice(+b.dataset.del,1);save();renderTable();renderPreview();});
+  $('colHint').textContent='열 순서: '+cols.join(' · ')+'  (엑셀/CSV도 이 순서로)';
+}
+function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function renderPreview(){
+  const rs=curRows().filter(r=>r&&r.some(x=>(x||'').trim()));
+  $('cntPill').textContent=rs.length+'건';
+  const box=$('preview');box.className='previewgrid';
+  if(!rs.length){box.innerHTML='<p class="muted">위에 정보를 입력하거나 엑셀을 올리면 여기 미리보기가 나와요.</p>';return;}
+  if(form==='badge'){box.classList.add('g-badge');box.innerHTML=rs.map(r=>`<div class="badge"><div class="l">군포시청</div><div class="r"><div class="nm">${esc(r[2])}</div><div class="dp">${esc(r[0])} · ${esc(r[1])}</div></div></div>`).join('');}
+  else if(form==='plate'){box.classList.add('g-plate');box.innerHTML=rs.map(r=>`<div class="plate"><div class="org">군포시청 ${esc(r[0])}</div><div class="nm">${esc(r[2])}</div><div class="dp">${esc(r[1])}</div></div>`).join('');}
+  else if(form==='org'){
+    const by={};rs.forEach(r=>{(by[r[0]||'부서미정']=by[r[0]||'부서미정']||[]).push(r);});
+    box.innerHTML='<div class="org-tree">'+Object.keys(by).map(d=>`<div class="org-dept"><div class="h">${esc(d)}</div><div class="mem">${by[d].map(r=>`<div class="m"><b>${esc(r[2])}</b> ${esc(r[1])}</div>`).join('')}</div></div>`).join('')+'</div>';}
+  else if(form==='call'){
+    const by={};rs.forEach(r=>{(by[r[0]||'부서미정']=by[r[0]||'부서미정']||[]).push(r);});
+    box.innerHTML='<div class="call">'+Object.keys(by).map(d=>`<div style="font-weight:800;color:var(--navy);margin:8px 0 4px">${esc(d)}</div><table><tr><th>직위</th><th>성명</th><th>연락처</th></tr>${by[d].map(r=>`<tr><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td></tr>`).join('')}</table>`).join('')+'</div>';}
+  else if(form==='cert'){box.classList.add('g-cert');box.innerHTML=rs.map(r=>`<div class="cert"><div class="t">위 촉 장</div>
+    <div class="who">${esc(r[1])} ${esc(r[2])} 귀하</div>
+    <div class="body">위 사람을 군포시 위원회 위원으로 위촉합니다.<br>${r[3]?'(위촉기간: '+esc(r[3])+')':''}</div>
+    <div class="foot">${new Date().getFullYear()}.  ${new Date().getMonth()+1}.  ${new Date().getDate()}.<br>군 포 시 장</div></div>`).join('');}
+  else if(form==='cplate'){box.classList.add('g-plate');box.innerHTML=rs.map(r=>`<div class="plate"><div class="org">${esc(r[1])}</div><div class="nm">${esc(r[2])}</div><div class="dp">${esc(r[0])}</div></div>`).join('');}
+}
+// mode switch
+document.querySelectorAll('#mode button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#mode button').forEach(x=>x.classList.remove('on'));b.classList.add('on');mode=b.dataset.m;form=SCHEMA[mode].forms[0].k;renderForms();renderTable();renderPreview();});
+// rows
+$('addRow').onclick=()=>{curRows().push(new Array(curCols().length).fill(''));save();renderTable();};
+$('clear').onclick=()=>{if(confirm('이 화면의 입력을 모두 지울까요?')){rows[mode]=[];save();renderTable();renderPreview();}};
+// template download (CSV)
+$('tpl').onclick=()=>{const cols=curCols();const sample=mode==='office'?['독서지원팀','주무관','홍길동','031-390-0000']:['2026-001','○○대학교 교수','홍길동','2026.1~2027.12'];
+  const csv='﻿'+cols.join(',')+'\n'+sample.join(',')+'\n';
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=(mode==='office'?'직원정보 표준양식':'위원정보 표준양식')+'.csv';a.click();toast('표준 양식 내려받기');};
+// upload
+$('file').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const ext=f.name.split('.').pop().toLowerCase();
+  if(ext==='csv'){const rd=new FileReader();rd.onload=ev=>{ingest(parseCSV(ev.target.result));};rd.readAsText(f,'utf-8');}
+  else{ // xlsx
+    if(window.__noxlsx||typeof XLSX==='undefined'){alert('엑셀(.xlsx)을 읽는 기능을 불러오지 못했어요(네트워크 차단일 수 있어요). 엑셀에서 "다른 이름으로 저장 → CSV"로 올려주세요.');e.target.value='';return;}
+    const rd=new FileReader();rd.onload=ev=>{try{const wb=XLSX.read(ev.target.result,{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];const aoa=XLSX.utils.sheet_to_json(ws,{header:1});ingest(aoa);}catch(err){alert('엑셀을 읽지 못했어요. CSV로 올려주세요.');}};rd.readAsArrayBuffer(f);}
+  e.target.value='';});
+function parseCSV(t){return t.replace(/^﻿/,'').split(/\r?\n/).filter(l=>l.trim()).map(l=>l.split(',').map(c=>c.trim()));}
+function ingest(aoa){if(!aoa||!aoa.length)return;const head=aoa[0].map(x=>(x||'').toString());
+  const looksHeader=curCols().some(c=>head.includes(c));const data=looksHeader?aoa.slice(1):aoa;
+  rows[mode]=data.filter(r=>r.some(x=>(x||'').toString().trim())).map(r=>{const a=[];for(let i=0;i<curCols().length;i++)a[i]=(r[i]||'').toString();return a;});
+  save();renderTable();renderPreview();toast(rows[mode].length+'건 불러옴');}
+let tt;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),1500);}
+$('print').onclick=()=>window.print();
+// seed sample if empty
+if(!rows.office.length)rows.office=[['독서지원팀','팀장','전선숙','031-390-8871'],['독서지원팀','주무관','이은우','031-390-8875']];
+renderForms();renderTable();renderPreview();
 </script>
 </body>
 </html>
