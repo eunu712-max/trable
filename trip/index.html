@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#283890">
+<title>출장복명서 &amp; 출장한컷</title>
+<link rel="stylesheet" href="../gunpo.css">
+<style>
+  .seg{display:flex;flex-wrap:wrap;gap:6px;}
+  .seg button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--mut);}
+  .seg button.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .filebtn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--navy);color:var(--navy);
+    background:#fff;border-radius:10px;padding:10px 14px;font-weight:700;font-size:13px;}
+  .filebtn input{display:none;}
+  .photos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+  .ph{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;}
+  .ph img{width:100%;height:120px;object-fit:cover;display:block;}
+  .ph input{width:100%;border:0;border-top:1px solid var(--line);padding:7px 9px;font-size:12px;}
+  .ph .x{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.55);color:#fff;border:0;border-radius:50%;width:24px;height:24px;font-weight:800;}
+  .phwrap{position:relative;}
+  /* 복명서 출력물 */
+  .doc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;}
+  .doc h3{text-align:center;letter-spacing:6px;margin:0 0 14px;font-size:20px;}
+  table.f{width:100%;border-collapse:collapse;}
+  table.f th,table.f td{border:1px solid #9aa7bd;padding:9px 10px;font-size:14px;text-align:left;vertical-align:top;}
+  table.f th{background:var(--sky2);color:var(--navy);width:28%;font-weight:700;}
+  .docph{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+  .docph figure{margin:0;border:1px solid #9aa7bd;border-radius:8px;overflow:hidden;}
+  .docph img{width:100%;height:160px;object-fit:cover;display:block;}
+  .docph figcaption{font-size:12px;padding:6px 8px;color:var(--ink);}
+  @media print{body{background:#fff;}.gp-header,.card,.row,.noprint{display:none!important;}.wrap{max-width:none;padding:0;}.doc{border:0;}}
+</style>
+</head>
+<body>
+<div class="gp-header"><div class="in">
+  <div class="gp-logo">군포</div>
+  <div style="flex:1"><h1>출장복명서 &amp; 한컷</h1><div class="sub">현장에서 바로 작성</div></div>
+  <a class="back" href="../gunpo/">← 도구</a>
+</div></div>
+
+<div class="wrap">
+  <div class="card noprint">
+    <h2><span class="dot"></span>서식 선택</h2>
+    <div class="seg" id="kind">
+      <button data-k="민원현장 확인" class="on">민원현장 확인용</button>
+      <button data-k="위반건축물 출장">위반건축물</button>
+      <button data-k="현장 출장">기타</button>
+    </div>
+  </div>
+
+  <div class="card noprint">
+    <h2><span class="dot"></span>출장 내용</h2>
+    <label>출장자 (소속·성명)</label>
+    <input type="text" id="who" value="독서지원팀 이은우">
+    <label>일시</label>
+    <input type="text" id="when" placeholder="2026-11-05 14:00">
+    <label>장소</label>
+    <input type="text" id="where" placeholder="군포시 ...">
+    <label>출장 목적</label>
+    <input type="text" id="purpose" placeholder="예: 현장 확인">
+    <label>처리 내용 (복명)</label>
+    <textarea id="content" placeholder="현장에서 확인·처리한 내용을 적어주세요."></textarea>
+  </div>
+
+  <div class="card noprint">
+    <h2><span class="dot"></span>현장 사진 (출장한컷)</h2>
+    <label class="filebtn">📷 사진 추가<input type="file" id="photo" accept="image/*" multiple></label>
+    <div class="photos" id="photos"></div>
+    <p class="muted" style="margin-top:8px">사진마다 한 줄 설명을 달 수 있어요. 사진은 이 기기 안에서만 복명서에 들어가요.</p>
+  </div>
+
+  <div class="row noprint">
+    <button class="btn primary block" id="make">복명서 만들기</button>
+  </div>
+
+  <div class="card" id="out" style="display:none">
+    <h2 class="noprint"><span class="dot"></span>완성</h2>
+    <div class="doc" id="doc"></div>
+    <div class="row noprint" style="margin-top:12px">
+      <button class="btn ghost" id="edit" style="flex:0 0 auto">수정</button>
+      <button class="btn primary" id="print">🖨️ 인쇄 / PDF 저장</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let kind='민원현장 확인', photos=[]; // {src,cap}
+document.querySelectorAll('#kind button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#kind button').forEach(x=>x.classList.remove('on'));b.classList.add('on');kind=b.dataset.k;});
+$('photo').addEventListener('change',e=>{[...e.target.files].forEach(f=>{const rd=new FileReader();
+  rd.onload=ev=>{photos.push({src:ev.target.result,cap:''});drawPhotos();};rd.readAsDataURL(f);});e.target.value='';});
+function drawPhotos(){$('photos').innerHTML=photos.map((p,i)=>`<div class="ph phwrap">
+  <button class="x" data-i="${i}">×</button><img src="${p.src}">
+  <input type="text" placeholder="사진 설명" value="${(p.cap||'').replace(/"/g,'&quot;')}" data-cap="${i}"></div>`).join('');
+  document.querySelectorAll('.ph .x').forEach(b=>b.onclick=()=>{photos.splice(+b.dataset.i,1);drawPhotos();});
+  document.querySelectorAll('[data-cap]').forEach(inp=>inp.oninput=()=>{photos[+inp.dataset.cap].cap=inp.value;});}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\n/g,'<br>');}
+$('make').onclick=()=>{
+  const rows=[['출장자',$('who').value],['일시',$('when').value],['장소',$('where').value],
+    ['목적',$('purpose').value],['처리내용',$('content').value]];
+  const phHtml=photos.length?`<div class="docph">${photos.map((p,i)=>`<figure><img src="${p.src}">
+    <figcaption>사진 ${i+1}. ${esc(p.cap)||'&nbsp;'}</figcaption></figure>`).join('')}</div>`:'';
+  const today=new Date();const ds=`${today.getFullYear()}.  ${today.getMonth()+1}.  ${today.getDate()}.`;
+  $('doc').innerHTML=`<h3>출 장 복 명 서</h3>
+    <table class="f">${rows.map(r=>`<tr><th>${r[0]}</th><td>${esc(r[1])||'&nbsp;'}</td></tr>`).join('')}</table>
+    ${phHtml}
+    <div style="text-align:right;margin-top:16px;font-size:14px">위와 같이 출장 결과를 복명합니다.<br><br>${ds}<br>
+      복명자 : ${esc($('who').value)} (서명 또는 인)</div>
+    <div class="muted" style="margin-top:8px">※ ${esc(kind)} 서식 — 제출 전 부서 양식을 확인하세요.</div>`;
+  $('out').style.display='block';window.scrollTo({top:$('out').offsetTop-10,behavior:'smooth'});
+};
+$('edit').onclick=()=>$('out').style.display='none';
+$('print').onclick=()=>window.print();
+</script>
+</body>
+</html>

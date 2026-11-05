@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#283890">
+<title>슬기로운 공직생활</title>
+<link rel="stylesheet" href="../gunpo.css">
+<style>
+  .seg{display:flex;flex-wrap:wrap;gap:6px;}
+  .seg button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--mut);}
+  .seg button.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .preview{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:4px;}
+  /* 명패/명찰 출력물 */
+  .plate{border:3px solid var(--navy);border-radius:10px;padding:26px 18px;text-align:center;background:#fff;margin:0 auto;}
+  .plate .org{color:var(--blue);font-weight:800;font-size:15px;letter-spacing:1px;margin-bottom:10px;}
+  .plate .nm{color:var(--navy);font-weight:900;font-size:40px;letter-spacing:6px;}
+  .plate .role{color:var(--ink);font-weight:700;font-size:18px;margin-top:8px;}
+  .plate .foot{color:var(--mut);font-size:12px;margin-top:14px;}
+  .badge{display:flex;gap:0;border:2px solid var(--navy);border-radius:10px;overflow:hidden;max-width:360px;margin:0 auto;}
+  .badge .l{background:var(--navy);color:#fff;width:92px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;padding:8px;}
+  .badge .r{flex:1;padding:14px;text-align:left;}
+  .badge .r .nm{font-weight:900;font-size:26px;color:var(--navy);}
+  .badge .r .role{color:var(--mut);font-weight:700;font-size:13px;margin-top:2px;}
+  @media print{
+    body{background:#fff;padding:0;} .gp-header,.wrap>.card,.actionbar,.muted,.noprint{display:none!important;}
+    .wrap{max-width:none;padding:0;} .preview{border:0;padding:0;}
+  }
+</style>
+</head>
+<body>
+<div class="gp-header"><div class="in">
+  <div class="gp-logo">군포</div>
+  <div style="flex:1"><h1>슬기로운 공직생활</h1><div class="sub">반복 서식을 더 간단하게</div></div>
+  <a class="back" href="../gunpo/">← 도구</a>
+</div></div>
+
+<div class="wrap">
+  <div class="card">
+    <h2><span class="dot"></span>무엇을 만들까요?</h2>
+    <div class="seg" id="kind">
+      <button data-k="plate" class="on">책상 명패</button>
+      <button data-k="badge">명찰</button>
+      <button data-k="committee">위원 명패</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>내용 입력</h2>
+    <label>소속 / 기관</label>
+    <input type="text" id="org" value="군포시청">
+    <label>이름</label>
+    <input type="text" id="name" value="홍길동">
+    <label id="roleLabel">직위 · 직급</label>
+    <input type="text" id="role" value="주무관">
+    <label>하단 문구 (선택)</label>
+    <input type="text" id="foot" placeholder="예: 독서지원팀">
+  </div>
+
+  <div class="card noprint">
+    <h2><span class="dot"></span>미리보기</h2>
+    <div class="preview" id="preview"></div>
+    <p class="muted" style="margin-top:10px">아래 <b>인쇄</b>를 누르면 미리보기 그대로 출력돼요. PDF로 저장도 인쇄 화면에서 선택할 수 있어요.</p>
+  </div>
+
+  <div class="row">
+    <button class="btn primary" id="print">🖨️ 인쇄 / PDF 저장</button>
+  </div>
+</div>
+
+<!-- 인쇄 대상 -->
+<div class="wrap" id="printArea" style="display:none"><div class="preview" id="printSlot"></div></div>
+
+<script>
+let kind='plate';
+const $=id=>document.getElementById(id);
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function build(){
+  const org=esc($('org').value),name=esc($('name').value),role=esc($('role').value),foot=esc($('foot').value);
+  if(kind==='plate'||kind==='committee'){
+    return `<div class="plate" style="max-width:${kind==='committee'?'420px':'380px'}">
+      <div class="org">${org}</div>
+      <div class="nm">${name}</div>
+      <div class="role">${role}</div>
+      ${foot?`<div class="foot">${foot}</div>`:''}</div>`;
+  }
+  return `<div class="badge"><div class="l">${org}</div><div class="r">
+      <div class="nm">${name}</div><div class="role">${role}${foot?' · '+foot:''}</div></div></div>`;
+}
+function render(){$('preview').innerHTML=build();}
+['org','name','role','foot'].forEach(id=>$(id).addEventListener('input',render));
+document.querySelectorAll('#kind button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#kind button').forEach(x=>x.classList.remove('on'));b.classList.add('on');kind=b.dataset.k;
+  $('roleLabel').textContent = kind==='committee'?'직위 (예: 위원장)':'직위 · 직급';render();});
+$('print').onclick=()=>{$('printSlot').innerHTML=build();$('printArea').style.display='block';window.print();setTimeout(()=>$('printArea').style.display='none',300);};
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#283890">
+<title>공공시설 예약비서</title>
+<link rel="stylesheet" href="../gunpo.css">
+<style>
+  .cats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+  .cat{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer;}
+  .cat.on{border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,159,224,.12);}
+  .cat .i{font-size:24px;}
+  .cat .n{font-size:12px;font-weight:800;color:var(--navy);margin-top:6px;}
+  .search{display:flex;gap:8px;}
+  .search input{flex:1;}
+  .result a{display:block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin-bottom:8px;
+    text-decoration:none;color:inherit;}
+  .result a .t{font-weight:800;color:var(--navy);font-size:14px;}
+  .result a .d{font-size:12px;color:var(--mut);margin-top:3px;}
+  .result a .go{float:right;color:var(--blue);font-weight:800;font-size:13px;}
+  @media(max-width:360px){.cats{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<div class="gp-header"><div class="in">
+  <div class="gp-logo">군포</div>
+  <div style="flex:1"><h1>공공시설 예약비서</h1><div class="sub">필요한 공간을 빠르게</div></div>
+  <a class="back" href="../gunpo/">← 도구</a>
+</div></div>
+
+<div class="wrap">
+  <div class="card">
+    <h2><span class="dot"></span>어떤 공간을 찾으세요?</h2>
+    <div class="cats" id="cats"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>키워드로 찾기</h2>
+    <div class="search">
+      <input type="text" id="kw" placeholder="예: 세미나실, 강당, 체육관">
+      <button class="btn primary" id="go" style="flex:0 0 auto">검색</button>
+    </div>
+    <div class="chips" style="margin-top:10px" id="quick"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>예약처 연결</h2>
+    <div class="result" id="result">
+      <p class="muted">위에서 용도를 고르거나 키워드를 검색하면, 해당 공간의 예약 페이지로 바로 연결해 드려요.</p>
+    </div>
+    <p class="muted" style="margin-top:6px">공간별 실시간 빈자리는 각 예약처에서 확인돼요. 이 도구는 알맞은 예약처를 찾아 연결해 줍니다.</p>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const CATS=[
+  {i:'📚',n:'강의·교육',kw:'강의실 교육장'},
+  {i:'💼',n:'회의·세미나',kw:'회의실 세미나실'},
+  {i:'👥',n:'모임·스터디',kw:'모임방 스터디룸'},
+  {i:'🎨',n:'전시·공예',kw:'전시실 공예실'},
+  {i:'🎭',n:'공연·행사',kw:'공연장 강당'},
+  {i:'🏃',n:'체육시설',kw:'체육관 운동장'},
+  {i:'⛺',n:'캠핑·야외',kw:'야영장 야외공간'},
+  {i:'🏛️',n:'도서관 공간',kw:'도서관 다목적실'},
+  {i:'🌱',n:'청년공간',kw:'청년센터 청년공간'},
+];
+// 예약처(공식·검색) — 실시간 빈자리는 각 사이트에서 확인
+const DESTS=[
+  {t:'경기도 공공서비스예약', d:'강당·회의실·체육시설 등 경기도 통합 예약', u:'https://www.gg.go.kr/reservation'},
+  {t:'군포시 도서관 시설예약', d:'도서관 다목적실·세미나실·동아리실', u:'https://www.gunpolib.go.kr'},
+  {t:'군포시청 누리집 시설안내', d:'문화·체육·복지시설 안내와 예약 링크', u:'https://www.gunpo.go.kr'},
+];
+function buildCats(){$('cats').innerHTML=CATS.map((c,i)=>`<div class="cat" data-i="${i}"><div class="i">${c.i}</div><div class="n">${c.n}</div></div>`).join('');
+  document.querySelectorAll('.cat').forEach(el=>el.onclick=()=>{document.querySelectorAll('.cat').forEach(x=>x.classList.remove('on'));el.classList.add('on');
+    const c=CATS[+el.dataset.i];$('kw').value=c.n;search(c.kw+' '+c.n);});}
+function buildQuick(){$('quick').innerHTML=['강의','교육','세미나','회의','모임','전시','체육관','강당'].map(k=>`<button class="chip">${k}</button>`).join('');
+  document.querySelectorAll('#quick .chip').forEach(b=>b.onclick=()=>{$('kw').value=b.textContent;search(b.textContent);});}
+function search(term){
+  const q=encodeURIComponent('군포 '+term+' 예약');
+  let html=DESTS.map(d=>`<a href="${d.u}" target="_blank" rel="noopener"><span class="go">열기 →</span>
+    <div class="t">${d.t}</div><div class="d">${d.d}</div></a>`).join('');
+  html+=`<a href="https://www.google.com/search?q=${q}" target="_blank" rel="noopener"><span class="go">검색 →</span>
+    <div class="t">‘${term}’ 예약처 더 찾기</div><div class="d">군포 지역 ${term} 예약 가능한 곳을 웹에서 검색</div></a>`;
+  $('result').innerHTML=html;
+}
+$('go').onclick=()=>{const v=$('kw').value.trim();if(v)search(v);};
+$('kw').addEventListener('keydown',e=>{if(e.key==='Enter'){const v=$('kw').value.trim();if(v)search(v);}});
+buildCats();buildQuick();
+</script>
+</body>
+</html>

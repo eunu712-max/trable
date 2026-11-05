@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#283890">
+<title>감사사례 연찬 도우미</title>
+<link rel="stylesheet" href="../gunpo.css">
+<style>
+  .stat{display:flex;gap:10px;}
+  .stat .b{flex:1;background:var(--sky2);border-radius:12px;padding:12px;text-align:center;}
+  .stat .b .n{font-size:22px;font-weight:900;color:var(--navy);}
+  .stat .b .l{font-size:11px;color:var(--mut);font-weight:700;margin-top:2px;}
+  .search{display:flex;gap:8px;}.search input{flex:1;}
+  .case{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;}
+  .case .top{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap;}
+  .case .t{font-weight:800;color:var(--ink);font-size:14px;margin:4px 0 6px;}
+  .case .meta{font-size:12px;color:var(--mut);}
+  .case .body{font-size:13px;color:var(--ink);margin-top:6px;line-height:1.55;}
+  mark{background:var(--gold);color:#000;padding:0 2px;border-radius:3px;}
+  .ex{background:var(--sky);color:var(--navy);}
+  .filebtn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--navy);color:var(--navy);
+    background:#fff;border-radius:10px;padding:10px 14px;font-weight:700;font-size:13px;}
+  .filebtn input{display:none;}
+</style>
+</head>
+<body>
+<div class="gp-header"><div class="in">
+  <div class="gp-logo">군포</div>
+  <div style="flex:1"><h1>감사사례 연찬 도우미</h1><div class="sub">유사 지적사례 미리 확인</div></div>
+  <a class="back" href="../gunpo/">← 도구</a>
+</div></div>
+
+<div class="wrap">
+  <div class="card">
+    <div class="stat">
+      <div class="b"><div class="n" id="cnt">0</div><div class="l">사례 건수</div></div>
+      <div class="b"><div class="n" id="hit">0</div><div class="l">검색 결과</div></div>
+      <div class="b"><div class="n" id="src">예시</div><div class="l">자료 출처</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>어떤 업무를 확인하고 계신가요?</h2>
+    <div class="search">
+      <input type="text" id="kw" placeholder="업무 키워드 (예: 계약, 보조금, 출장)">
+      <button class="btn primary" id="go" style="flex:0 0 auto">검색</button>
+    </div>
+    <div class="chips" style="margin-top:10px" id="quick"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>지적사례</h2>
+    <div id="result"><p class="muted">키워드를 넣으면 담당 업무와 유사한 지적사례를 보여줘요.</p></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="dot"></span>내 감사자료 불러오기</h2>
+    <p class="muted" style="margin-top:0">공개된 감사결과를 CSV나 JSON으로 저장해 불러오면, 샘플 대신 실제 자료로 검색돼요.
+      CSV 열: <b>제목, 분야, 기관, 일자, 내용</b></p>
+    <div class="row" style="margin-top:8px">
+      <label class="filebtn">📂 CSV/JSON 불러오기<input type="file" id="file" accept=".csv,.json,.txt"></label>
+      <a class="chip" href="https://www.bai.go.kr" target="_blank" rel="noopener">감사원 공개자료 ↗</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+// 예시(샘플) — 실제 감사 결과가 아니라 검색 흐름을 보여주는 가상의 예시입니다.
+let CASES=[
+  {t:'물품 수의계약 분할 체결 부적정',f:'계약',o:'(예시)',d:'2026-09-15',b:'동일 목적의 물품을 금액 기준을 피하려 여러 건으로 나누어 수의계약으로 체결한 사례. 분할 계약 여부를 사전에 점검할 것.'},
+  {t:'보조금 정산 증빙 미흡',f:'보조금',o:'(예시)',d:'2026-08-20',b:'보조사업자 정산 시 집행 증빙이 일부 누락되었음에도 정산을 완료한 사례. 증빙 대조 절차를 강화할 것.'},
+  {t:'출장여비 중복 지급',f:'출장',o:'(예시)',d:'2026-07-11',b:'같은 일정의 출장에 대해 여비가 중복 지급된 사례. 출장명령과 복명 내역을 대조하여 지급할 것.'},
+  {t:'공유재산 사용허가 기간 초과',f:'공유재산',o:'(예시)',d:'2026-06-30',b:'사용허가 기간이 지난 뒤에도 공유재산이 계속 사용된 사례. 기간 만료 전 연장·회수 조치를 할 것.'},
+  {t:'민원 처리기한 미준수',f:'민원',o:'(예시)',d:'2026-05-02',b:'법정 처리기한을 넘겨 민원을 처리한 사례. 처리기한 임박 건에 대한 알림 체계를 운영할 것.'},
+];
+let source='예시';
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function hl(s,kw){s=esc(s);if(!kw)return s;try{return s.replace(new RegExp('('+kw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark>$1</mark>');}catch(e){return s;}}
+function render(list,kw){
+  $('cnt').textContent=CASES.length;$('hit').textContent=list.length;$('src').textContent=source;
+  if(!list.length){$('result').innerHTML='<p class="muted">검색 결과가 없어요. 다른 키워드로 찾아보세요.</p>';return;}
+  $('result').innerHTML=list.map(c=>`<div class="case"><div class="top">
+    <span class="pill navy">${esc(c.f||'기타')}</span>
+    ${/\(예시\)/.test(c.o||'')?'<span class="pill ex">예시</span>':''}
+    <span class="meta" style="margin-left:auto">${esc(c.d||'')}</span></div>
+    <div class="t">${hl(c.t,kw)}</div>
+    <div class="meta">${esc(c.o||'')}</div>
+    <div class="body">${hl(c.b,kw)}</div></div>`).join('');
+}
+function search(kw){kw=(kw||'').trim();
+  const list=!kw?CASES:CASES.filter(c=>((c.t||'')+(c.f||'')+(c.b||'')).toLowerCase().includes(kw.toLowerCase()));
+  render(list,kw);}
+$('go').onclick=()=>search($('kw').value);
+$('kw').addEventListener('keydown',e=>{if(e.key==='Enter')search($('kw').value);});
+$('quick').innerHTML=['계약','보조금','출장','공유재산','민원','수의계약','정산'].map(k=>`<button class="chip">${k}</button>`).join('');
+document.querySelectorAll('#quick .chip').forEach(b=>b.onclick=()=>{$('kw').value=b.textContent;search(b.textContent);});
+// file load
+$('file').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();
+  rd.onload=ev=>{try{
+    let txt=ev.target.result,arr;
+    if(f.name.endsWith('.json')){arr=JSON.parse(txt);}
+    else{const lines=txt.split(/\r?\n/).filter(x=>x.trim());const head=lines.shift().split(',').map(s=>s.trim());
+      const idx=n=>head.findIndex(h=>h.includes(n));
+      const it=idx('제목'),ifl=idx('분야'),io=idx('기관'),idd=idx('일자'),ib=idx('내용');
+      arr=lines.map(l=>{const c=l.split(',');return{t:c[it]||'',f:c[ifl]||'',o:c[io]||'',d:c[idd]||'',b:c[ib]||''};});}
+    CASES=arr.map(x=>({t:x.t||x.제목,f:x.f||x.분야,o:x.o||x.기관,d:x.d||x.일자,b:x.b||x.내용}));
+    source='내 자료';search('');alert('자료 '+CASES.length+'건을 불러왔어요.');
+  }catch(err){alert('파일을 읽지 못했어요. CSV 열(제목,분야,기관,일자,내용)이나 JSON 형식을 확인해 주세요.');}};
+  rd.readAsText(f,'utf-8');});
+render(CASES,'');
+</script>
+</body>
+</html>

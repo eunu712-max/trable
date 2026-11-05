@@ -1,0 +1,71 @@
+/* 군포시 공통 테마 — 밝은 파랑 + 남색 */
+:root{
+  --navy:#283890; --blue:#1e9fe0; --sky:#bfe8ff; --sky2:#e8f6ff;
+  --ink:#20304a; --mut:#6b7892; --line:#dbe6f2;
+  --bg:#f3f8fd; --card:#ffffff; --ok:#1f9d6b; --warn:#e8604c; --gold:#f2b705;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.5;padding-bottom:40px;
+}
+a{color:var(--blue);}
+.gp-header{
+  background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;
+  padding:16px;position:sticky;top:0;z-index:20;box-shadow:0 2px 10px rgba(40,56,144,.25);
+}
+.gp-header .in{max-width:620px;margin:0 auto;display:flex;align-items:center;gap:12px;}
+.gp-logo{width:34px;height:34px;border-radius:9px;background:#fff;color:var(--navy);
+  font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  letter-spacing:-.5px;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+.gp-header h1{font-size:18px;margin:0;font-weight:800;letter-spacing:-.3px;flex:1;}
+.gp-header .sub{font-size:12px;opacity:.9;margin-top:2px;font-weight:500;}
+.gp-header .back{color:#fff;text-decoration:none;font-size:13px;background:rgba(255,255,255,.18);
+  padding:6px 12px;border-radius:20px;font-weight:700;white-space:nowrap;}
+.wrap{max-width:620px;margin:0 auto;padding:16px;}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px;
+  box-shadow:0 4px 14px rgba(40,56,144,.05);}
+.card h2{font-size:14px;margin:0 0 12px;color:var(--navy);font-weight:800;display:flex;align-items:center;gap:7px;}
+.card h2 .dot{width:8px;height:8px;border-radius:50%;background:var(--blue);}
+label{display:block;font-size:12px;color:var(--mut);margin:10px 0 5px;font-weight:700;}
+input[type=text],input[type=number],input[type=date],input[type=tel],textarea,select{
+  width:100%;border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;font:inherit;font-size:15px;
+  color:var(--ink);background:#fff;}
+textarea{resize:vertical;min-height:70px;}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,159,224,.12);}
+
+.btn{border:none;border-radius:12px;padding:13px 16px;font-size:15px;font-weight:800;cursor:pointer;}
+.btn.primary{background:var(--blue);color:#fff;}
+.btn.navy{background:var(--navy);color:#fff;}
+.btn.ghost{background:#fff;color:var(--navy);border:2px solid var(--navy);}
+.btn:active{transform:translateY(1px);}
+.btn.block{width:100%;}
+.row{display:flex;gap:10px;flex-wrap:wrap;}
+.row>.btn{flex:1;}
+
+.chip{display:inline-flex;align-items:center;gap:5px;border:1.5px solid var(--line);background:#fff;
+  border-radius:20px;padding:8px 14px;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;}
+.chip.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+.chips{display:flex;gap:8px;flex-wrap:wrap;}
+.pill{display:inline-block;background:var(--blue);color:#fff;border-radius:16px;padding:3px 11px;
+  font-size:12px;font-weight:800;}
+.pill.navy{background:var(--navy);}
+.pill.sky{background:var(--sky);color:var(--navy);}
+
+.muted{color:var(--mut);font-size:12px;}
+.hr{height:1px;background:var(--line);margin:14px 0;border:0;}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ink);color:#fff;
+  padding:11px 20px;border-radius:30px;font-size:13px;font-weight:700;z-index:60;opacity:0;transition:.25s;pointer-events:none;}
+.toast.show{opacity:1;}
+
+/* grid of tools (hub) */
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.tool{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);
+  border-radius:16px;padding:16px;box-shadow:0 4px 14px rgba(40,56,144,.05);}
+.tool .ic{width:46px;height:46px;border-radius:12px;background:var(--sky2);display:flex;align-items:center;
+  justify-content:center;font-size:24px;margin-bottom:10px;}
+.tool .nm{font-weight:800;font-size:14px;color:var(--navy);margin-bottom:3px;letter-spacing:-.3px;}
+.tool .ds{font-size:11px;color:var(--mut);line-height:1.45;}
+@media(max-width:380px){.tools{grid-template-columns:1fr;}}

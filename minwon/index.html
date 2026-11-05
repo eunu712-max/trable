@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#283890">
+<title>민원서식 작성 도우미</title>
+<link rel="stylesheet" href="../gunpo.css">
+<style>
+  .seg{display:flex;flex-wrap:wrap;gap:6px;}
+  .seg button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--mut);}
+  .seg button.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .steps{display:flex;gap:6px;margin-bottom:6px;}
+  .steps .s{flex:1;height:6px;border-radius:4px;background:var(--line);}
+  .steps .s.on{background:var(--blue);}
+  .q{font-size:17px;font-weight:800;color:var(--navy);margin:4px 0 12px;}
+  .formdoc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;}
+  .formdoc h3{text-align:center;font-size:19px;margin:0 0 14px;letter-spacing:4px;}
+  table.f{width:100%;border-collapse:collapse;}
+  table.f th,table.f td{border:1px solid #9aa7bd;padding:9px 10px;font-size:14px;vertical-align:middle;}
+  table.f th{background:var(--sky2);color:var(--navy);width:34%;text-align:left;font-weight:700;}
+  .sign{margin-top:18px;text-align:right;font-size:14px;}
+  .sign .d{margin-bottom:10px;}
+  @media print{body{background:#fff;}.gp-header,.card,.actionbar,.noprint,.row{display:none!important;}.wrap{max-width:none;padding:0;}}
+</style>
+</head>
+<body>
+<div class="gp-header"><div class="in">
+  <div class="gp-logo">군포</div>
+  <div style="flex:1"><h1>민원서식 작성 도우미</h1><div class="sub">답만 하면 서식이 채워져요</div></div>
+  <a class="back" href="../gunpo/">← 도구</a>
+</div></div>
+
+<div class="wrap">
+  <div class="card noprint">
+    <h2><span class="dot"></span>어떤 서식인가요?</h2>
+    <div class="seg" id="kind">
+      <button data-k="general" class="on">일반 민원신청서</button>
+      <button data-k="fact">사실증명 신청서</button>
+      <button data-k="civil">건의·제안서</button>
+    </div>
+  </div>
+
+  <div class="card noprint" id="wizard">
+    <div class="steps" id="steps"></div>
+    <div class="q" id="qtext"></div>
+    <div id="qinput"></div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn ghost" id="back" style="flex:0 0 auto">이전</button>
+      <button class="btn primary" id="nextBtn">다음</button>
+    </div>
+    <p class="muted" style="margin-top:8px">개인정보는 이 기기 안에서만 서식에 채워지고, 전송되지 않아요.</p>
+  </div>
+
+  <div class="card" id="resultCard" style="display:none">
+    <h2 class="noprint"><span class="dot"></span>완성된 서식</h2>
+    <div class="formdoc" id="doc"></div>
+    <div class="row noprint" style="margin-top:12px">
+      <button class="btn ghost" id="edit" style="flex:0 0 auto">수정</button>
+      <button class="btn primary" id="print">🖨️ 인쇄 / PDF 저장</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const FORMS={
+  general:{title:'민 원 신 청 서', q:[
+    {k:'name',t:'신청인 성함이 어떻게 되세요?',ph:'홍길동'},
+    {k:'birth',t:'생년월일을 알려주세요.',ph:'1990-01-01'},
+    {k:'addr',t:'주소를 적어주세요.',ph:'군포시 ...'},
+    {k:'tel',t:'연락처를 적어주세요.',ph:'010-0000-0000'},
+    {k:'subject',t:'신청(민원) 제목은?',ph:'예: 도로 보수 요청'},
+    {k:'content',t:'민원 내용을 적어주세요.',ph:'자세히 적을수록 처리가 빨라요.',area:true},
+  ]},
+  fact:{title:'사 실 증 명 신 청 서', q:[
+    {k:'name',t:'신청인 성함이 어떻게 되세요?',ph:'홍길동'},
+    {k:'birth',t:'생년월일을 알려주세요.',ph:'1990-01-01'},
+    {k:'addr',t:'주소를 적어주세요.',ph:'군포시 ...'},
+    {k:'tel',t:'연락처를 적어주세요.',ph:'010-0000-0000'},
+    {k:'subject',t:'어떤 사실의 증명이 필요하세요?',ph:'예: 거주사실 증명'},
+    {k:'use',t:'용도(제출처)는 어디인가요?',ph:'예: 학교 제출용'},
+    {k:'count',t:'필요한 통수는?',ph:'예: 2통'},
+  ]},
+  civil:{title:'시 정 건 의 · 제 안 서', q:[
+    {k:'name',t:'제안하시는 분 성함은?',ph:'홍길동'},
+    {k:'tel',t:'연락처를 적어주세요.',ph:'010-0000-0000'},
+    {k:'subject',t:'제안 제목은?',ph:'예: 도서관 야간 개방'},
+    {k:'now',t:'현재 상황(문제점)은 무엇인가요?',ph:'',area:true},
+    {k:'idea',t:'어떻게 바뀌면 좋을까요?',ph:'',area:true},
+    {k:'effect',t:'기대 효과가 있다면?',ph:'',area:true},
+  ]},
+};
+const LABELS={name:'성명',birth:'생년월일',addr:'주소',tel:'연락처',subject:'제목',content:'신청내용',
+  use:'용도',count:'필요통수',now:'현황·문제점',idea:'제안내용',effect:'기대효과'};
+let kind='general', step=0, data={};
+
+function startForm(){step=0;data={};renderStep();}
+function renderStep(){
+  const f=FORMS[kind];const n=f.q.length;
+  $('steps').innerHTML=f.q.map((_,i)=>`<div class="s${i<=step?' on':''}"></div>`).join('');
+  const q=f.q[step];
+  $('qtext').textContent=`(${step+1}/${n}) ${q.t}`;
+  const v=data[q.k]||'';
+  $('qinput').innerHTML = q.area
+    ? `<textarea id="ans" placeholder="${q.ph||''}">${v}</textarea>`
+    : `<input type="text" id="ans" placeholder="${q.ph||''}" value="${v.replace(/"/g,'&quot;')}">`;
+  $('ans').focus();
+  $('back').style.visibility=step===0?'hidden':'visible';
+  $('nextBtn').textContent = step===n-1?'완성하기':'다음';
+}
+$('nextBtn').onclick=()=>{
+  const f=FORMS[kind];data[f.q[step].k]=$('ans').value.trim();
+  if(step<f.q.length-1){step++;renderStep();}else finish();
+};
+$('back').onclick=()=>{if(step>0){data[FORMS[kind].q[step].k]=$('ans').value;step--;renderStep();}};
+document.querySelectorAll('#kind button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#kind button').forEach(x=>x.classList.remove('on'));b.classList.add('on');kind=b.dataset.k;
+  $('wizard').style.display='block';$('resultCard').style.display='none';startForm();});
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\n/g,'<br>');}
+function finish(){
+  const f=FORMS[kind];
+  let rows=f.q.map(q=>`<tr><th>${LABELS[q.k]||q.k}</th><td>${esc(data[q.k])||'&nbsp;'}</td></tr>`).join('');
+  const today=new Date();const ds=`${today.getFullYear()}.  ${today.getMonth()+1}.  ${today.getDate()}.`;
+  const nm=esc(data.name)||'';
+  $('doc').innerHTML=`<h3>${f.title}</h3><table class="f">${rows}</table>
+    <div class="sign"><div class="d">${ds}</div>신청인 : ${nm} (서명 또는 인)</div>
+    <div class="muted" style="margin-top:10px">※ 군포시장 귀하 — 실제 제출 전 담당부서 양식을 한 번 확인하세요.</div>`;
+  $('wizard').style.display='none';$('resultCard').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+$('edit').onclick=()=>{$('wizard').style.display='block';$('resultCard').style.display='none';step=0;renderStep();};
+$('print').onclick=()=>window.print();
+startForm();
+</script>
+</body>
+</html>
