@@ -7,29 +7,50 @@
 <title>출장복명서 &amp; 출장한컷</title>
 <link rel="stylesheet" href="../gunpo.css">
 <style>
-  .seg{display:flex;flex-wrap:wrap;gap:6px;}
-  .seg button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--mut);}
-  .seg button.on{background:var(--navy);color:#fff;border-color:var(--navy);}
-  .filebtn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--navy);color:var(--navy);
-    background:#fff;border-radius:10px;padding:10px 14px;font-weight:700;font-size:13px;}
+  .tabs{display:flex;gap:8px;margin-bottom:14px;}
+  .tabs .t{flex:1;text-align:center;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:10px 6px;font-size:12px;font-weight:800;color:var(--mut);}
+  .tabs .t .n{display:block;font-size:16px;color:var(--navy);}
+  .tabs .t.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .tabs .t.on .n{color:#fff;}
+  .notice{background:var(--sky2);border:1px solid var(--sky);border-radius:12px;padding:12px;font-size:12px;color:var(--navy);line-height:1.55;}
+  .fcards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px;}
+  .fc{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:14px;cursor:pointer;}
+  .fc.on{border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,159,224,.12);}
+  .fc .k{color:var(--mut);font-weight:800;font-size:12px;}
+  .fc .n{color:var(--navy);font-weight:800;font-size:14px;margin:4px 0;}
+  .fc .d{color:var(--mut);font-size:11px;line-height:1.4;}
+  @media(max-width:420px){.fcards{grid-template-columns:1fr;}.tabs .t{font-size:11px;}}
+  .filebtn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--navy);color:var(--navy);background:#fff;border-radius:10px;padding:10px 14px;font-weight:700;font-size:13px;}
   .filebtn input{display:none;}
   .photos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
-  .ph{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;}
-  .ph img{width:100%;height:120px;object-fit:cover;display:block;}
-  .ph input{width:100%;border:0;border-top:1px solid var(--line);padding:7px 9px;font-size:12px;}
-  .ph .x{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.55);color:#fff;border:0;border-radius:50%;width:24px;height:24px;font-weight:800;}
-  .phwrap{position:relative;}
-  /* 복명서 출력물 */
+  .ph{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;position:relative;}
+  .ph img{width:100%;height:130px;object-fit:cover;display:block;}
+  .ph .cap{width:100%;border:0;border-top:1px solid var(--line);padding:7px 9px;font-size:12px;}
+  .ph .tools{position:absolute;top:4px;right:4px;display:flex;gap:4px;}
+  .ph .tools button{background:rgba(0,0,0,.55);color:#fff;border:0;border-radius:6px;width:28px;height:28px;font-size:13px;font-weight:800;}
+  /* annotation modal */
+  .modal{position:fixed;inset:0;background:rgba(10,15,30,.75);z-index:80;display:none;align-items:center;justify-content:center;padding:12px;}
+  .modal.on{display:flex;}
+  .editor{background:#fff;border-radius:14px;padding:12px;max-width:560px;width:100%;max-height:92vh;overflow:auto;}
+  .editor h3{margin:0 0 8px;font-size:15px;color:var(--navy);}
+  .ecanvas{width:100%;border:1px solid var(--line);border-radius:8px;touch-action:none;display:block;}
+  .etools{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0;}
+  .etools button{border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:8px 11px;font-size:13px;font-weight:700;}
+  .etools button.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .ecolors{display:flex;gap:6px;}
+  .ecolors .c{width:28px;height:28px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1.5px var(--line);}
+  .ecolors .c.on{box-shadow:0 0 0 2.5px var(--navy);}
+  /* 복명서 */
   .doc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;}
   .doc h3{text-align:center;letter-spacing:6px;margin:0 0 14px;font-size:20px;}
   table.f{width:100%;border-collapse:collapse;}
-  table.f th,table.f td{border:1px solid #9aa7bd;padding:9px 10px;font-size:14px;text-align:left;vertical-align:top;}
+  table.f th,table.f td{border:1px solid #8a97ad;padding:9px 10px;font-size:14px;text-align:left;vertical-align:top;}
   table.f th{background:var(--sky2);color:var(--navy);width:28%;font-weight:700;}
   .docph{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
-  .docph figure{margin:0;border:1px solid #9aa7bd;border-radius:8px;overflow:hidden;}
-  .docph img{width:100%;height:160px;object-fit:cover;display:block;}
-  .docph figcaption{font-size:12px;padding:6px 8px;color:var(--ink);}
-  @media print{body{background:#fff;}.gp-header,.card,.row,.noprint{display:none!important;}.wrap{max-width:none;padding:0;}.doc{border:0;}}
+  .docph figure{margin:0;border:1px solid #8a97ad;border-radius:8px;overflow:hidden;}
+  .docph img{width:100%;height:170px;object-fit:cover;display:block;}
+  .docph figcaption{font-size:12px;padding:6px 8px;}
+  @media print{body{background:#fff;}.gp-header,.tabs,.card,.row,.noprint{display:none!important;}.wrap{max-width:none;padding:0;}.doc{border:0;}}
 </style>
 </head>
 <body>
@@ -40,79 +61,139 @@
 </div></div>
 
 <div class="wrap">
-  <div class="card noprint">
-    <h2><span class="dot"></span>서식 선택</h2>
-    <div class="seg" id="kind">
-      <button data-k="민원현장 확인" class="on">민원현장 확인용</button>
-      <button data-k="위반건축물 출장">위반건축물</button>
-      <button data-k="현장 출장">기타</button>
+  <div class="tabs" id="tabs">
+    <div class="t on" data-s="0"><span class="n">01</span>서식 선택</div>
+    <div class="t" data-s="1"><span class="n">02</span>내용·사진</div>
+    <div class="t" data-s="2"><span class="n">03</span>완료·전달</div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div id="s0">
+    <div class="card">
+      <div class="notice">사진과 입력 내용은 이 브라우저 안에서만 처리되고 서버로 전송되지 않아요. 창을 닫기 전에 <b>인쇄/PDF 저장</b>으로 결과물을 내려받으세요. 공용 PC에서는 내려받은 자료를 직접 관리해 주세요.</div>
+      <h2 style="margin-top:14px"><span class="dot"></span>작성할 출장복명서를 선택해 주세요</h2>
+      <div class="fcards" id="fcards">
+        <div class="fc on" data-k="민원현장 확인"><div class="k">가.</div><div class="n">민원현장 확인용</div><div class="d">일반 서식 · 민원내용과 현장 확인 결과</div></div>
+        <div class="fc" data-k="위반건축물 출장"><div class="k">나.</div><div class="n">위반건축물 출장복명서</div><div class="d">위반행위·용도·구조·면적 추가</div></div>
+        <div class="fc" data-k="현장 출장"><div class="k">다.</div><div class="n">기타</div><div class="d">보고서 제목을 직접 입력</div></div>
+      </div>
+      <div class="row" style="margin-top:14px"><button class="btn primary block" id="go1">다음 : 내용·사진</button></div>
     </div>
   </div>
 
-  <div class="card noprint">
-    <h2><span class="dot"></span>출장 내용</h2>
-    <label>출장자 (소속·성명)</label>
-    <input type="text" id="who" value="독서지원팀 이은우">
-    <label>일시</label>
-    <input type="text" id="when" placeholder="2026-11-05 14:00">
-    <label>장소</label>
-    <input type="text" id="where" placeholder="군포시 ...">
-    <label>출장 목적</label>
-    <input type="text" id="purpose" placeholder="예: 현장 확인">
-    <label>처리 내용 (복명)</label>
-    <textarea id="content" placeholder="현장에서 확인·처리한 내용을 적어주세요."></textarea>
-  </div>
-
-  <div class="card noprint">
-    <h2><span class="dot"></span>현장 사진 (출장한컷)</h2>
-    <label class="filebtn">📷 사진 추가<input type="file" id="photo" accept="image/*" multiple></label>
-    <div class="photos" id="photos"></div>
-    <p class="muted" style="margin-top:8px">사진마다 한 줄 설명을 달 수 있어요. 사진은 이 기기 안에서만 복명서에 들어가요.</p>
-  </div>
-
-  <div class="row noprint">
-    <button class="btn primary block" id="make">복명서 만들기</button>
-  </div>
-
-  <div class="card" id="out" style="display:none">
-    <h2 class="noprint"><span class="dot"></span>완성</h2>
-    <div class="doc" id="doc"></div>
-    <div class="row noprint" style="margin-top:12px">
-      <button class="btn ghost" id="edit" style="flex:0 0 auto">수정</button>
-      <button class="btn primary" id="print">🖨️ 인쇄 / PDF 저장</button>
+  <!-- STEP 2 -->
+  <div id="s1" style="display:none">
+    <div class="card">
+      <h2><span class="dot"></span>출장 내용</h2>
+      <div id="titleWrap" style="display:none"><label>보고서 제목</label><input type="text" id="ttl" placeholder="예: ○○ 현장 점검 복명"></div>
+      <label>출장자 (소속·성명)</label><input type="text" id="who" value="독서지원팀 이은우">
+      <label>일시</label><input type="text" id="when" placeholder="2026-11-05 14:00">
+      <label>장소</label><input type="text" id="where" placeholder="군포시 ...">
+      <label>출장 목적</label><input type="text" id="purpose" placeholder="예: 현장 확인">
+      <div id="extraWrap" style="display:none">
+        <label>위반 행위</label><input type="text" id="viol" placeholder="예: 무단 증축">
+        <label>용도 / 구조 / 면적</label><input type="text" id="struct" placeholder="예: 근린생활 / 철골 / 30㎡">
+      </div>
+      <label>처리 내용 (복명)</label><textarea id="content" placeholder="현장에서 확인·처리한 내용을 적어주세요."></textarea>
     </div>
+    <div class="card">
+      <h2><span class="dot"></span>현장 사진 · 출장한컷</h2>
+      <label class="filebtn">📷 사진 추가<input type="file" id="photo" accept="image/*" multiple></label>
+      <div class="photos" id="photos"></div>
+      <p class="muted">사진의 <b>✏️</b>를 누르면 현장을 원·사각·화살표로 표시할 수 있어요(출장한컷).</p>
+    </div>
+    <div class="row"><button class="btn ghost" id="back1" style="flex:0 0 auto">이전</button><button class="btn primary" id="go2">다음 : 완료</button></div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div id="s2" style="display:none">
+    <div class="card">
+      <h2 class="noprint"><span class="dot"></span>완성된 복명서</h2>
+      <div class="doc" id="doc"></div>
+    </div>
+    <div class="row"><button class="btn ghost" id="back2" style="flex:0 0 auto">이전</button><button class="btn primary" id="print">🖨️ 인쇄 / PDF 저장</button></div>
   </div>
 </div>
 
+<!-- 출장한컷 편집기 -->
+<div class="modal" id="modal"><div class="editor">
+  <h3>출장한컷 — 현장 표시</h3>
+  <canvas class="ecanvas" id="ecanvas"></canvas>
+  <div class="etools" id="etools">
+    <button data-tool="circle" class="on">⭕ 원</button>
+    <button data-tool="rect">▭ 사각</button>
+    <button data-tool="arrow">➴ 화살표</button>
+    <button data-tool="pen">✎ 펜</button>
+  </div>
+  <div class="etools" style="justify-content:space-between;align-items:center">
+    <div class="ecolors" id="ecolors"></div>
+    <div><button id="eundo">되돌리기</button></div>
+  </div>
+  <div class="row"><button class="btn ghost" id="ecancel" style="flex:0 0 auto">취소</button><button class="btn primary" id="edone">적용</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+
 <script>
 const $=id=>document.getElementById(id);
-let kind='민원현장 확인', photos=[]; // {src,cap}
-document.querySelectorAll('#kind button').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('#kind button').forEach(x=>x.classList.remove('on'));b.classList.add('on');kind=b.dataset.k;});
-$('photo').addEventListener('change',e=>{[...e.target.files].forEach(f=>{const rd=new FileReader();
-  rd.onload=ev=>{photos.push({src:ev.target.result,cap:''});drawPhotos();};rd.readAsDataURL(f);});e.target.value='';});
-function drawPhotos(){$('photos').innerHTML=photos.map((p,i)=>`<div class="ph phwrap">
-  <button class="x" data-i="${i}">×</button><img src="${p.src}">
-  <input type="text" placeholder="사진 설명" value="${(p.cap||'').replace(/"/g,'&quot;')}" data-cap="${i}"></div>`).join('');
-  document.querySelectorAll('.ph .x').forEach(b=>b.onclick=()=>{photos.splice(+b.dataset.i,1);drawPhotos();});
-  document.querySelectorAll('[data-cap]').forEach(inp=>inp.oninput=()=>{photos[+inp.dataset.cap].cap=inp.value;});}
+let kind='민원현장 확인', photos=[]; // {orig, edited, cap}
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\n/g,'<br>');}
-$('make').onclick=()=>{
-  const rows=[['출장자',$('who').value],['일시',$('when').value],['장소',$('where').value],
-    ['목적',$('purpose').value],['처리내용',$('content').value]];
-  const phHtml=photos.length?`<div class="docph">${photos.map((p,i)=>`<figure><img src="${p.src}">
-    <figcaption>사진 ${i+1}. ${esc(p.cap)||'&nbsp;'}</figcaption></figure>`).join('')}</div>`:'';
-  const today=new Date();const ds=`${today.getFullYear()}.  ${today.getMonth()+1}.  ${today.getDate()}.`;
-  $('doc').innerHTML=`<h3>출 장 복 명 서</h3>
-    <table class="f">${rows.map(r=>`<tr><th>${r[0]}</th><td>${esc(r[1])||'&nbsp;'}</td></tr>`).join('')}</table>
-    ${phHtml}
-    <div style="text-align:right;margin-top:16px;font-size:14px">위와 같이 출장 결과를 복명합니다.<br><br>${ds}<br>
-      복명자 : ${esc($('who').value)} (서명 또는 인)</div>
-    <div class="muted" style="margin-top:8px">※ ${esc(kind)} 서식 — 제출 전 부서 양식을 확인하세요.</div>`;
-  $('out').style.display='block';window.scrollTo({top:$('out').offsetTop-10,behavior:'smooth'});
-};
-$('edit').onclick=()=>$('out').style.display='none';
+// 서식 카드
+$('fcards').querySelectorAll('.fc').forEach(c=>c.onclick=()=>{$('fcards').querySelectorAll('.fc').forEach(x=>x.classList.remove('on'));c.classList.add('on');kind=c.dataset.k;});
+function show(step){[0,1,2].forEach(i=>$('s'+i).style.display=i===step?'block':'none');
+  $('tabs').querySelectorAll('.t').forEach(t=>t.classList.toggle('on',+t.dataset.s===step));
+  $('titleWrap').style.display=kind==='현장 출장'?'block':'none';
+  $('extraWrap').style.display=kind==='위반건축물 출장'?'block':'none';
+  if(step===2)buildDoc();window.scrollTo({top:0,behavior:'smooth'});}
+$('tabs').querySelectorAll('.t').forEach(t=>t.onclick=()=>show(+t.dataset.s));
+$('go1').onclick=()=>show(1);$('go2').onclick=()=>show(2);$('back1').onclick=()=>show(0);$('back2').onclick=()=>show(1);
+// 사진
+$('photo').addEventListener('change',e=>{[...e.target.files].forEach(f=>{const rd=new FileReader();rd.onload=ev=>{photos.push({orig:ev.target.result,edited:null,cap:''});drawPhotos();};rd.readAsDataURL(f);});e.target.value='';});
+function drawPhotos(){$('photos').innerHTML=photos.map((p,i)=>`<div class="ph">
+  <div class="tools"><button data-edit="${i}">✏️</button><button data-del="${i}">×</button></div>
+  <img src="${p.edited||p.orig}">
+  <input class="cap" placeholder="사진 설명" value="${(p.cap||'').replace(/"/g,'&quot;')}" data-cap="${i}"></div>`).join('');
+  $('photos').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{photos.splice(+b.dataset.del,1);drawPhotos();});
+  $('photos').querySelectorAll('[data-cap]').forEach(inp=>inp.oninput=()=>{photos[+inp.dataset.cap].cap=inp.value;});
+  $('photos').querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openEditor(+b.dataset.edit));}
+// 편집기
+let ec,ex,eimg,etool='circle',ecolor='#e8322d',strokes=[],cur=null,idx=-1;
+const EC_MAX=1000;
+function openEditor(i){idx=i;const p=photos[i];eimg=new Image();eimg.onload=()=>{
+  const cv=$('ecanvas');ec=cv;ex=cv.getContext('2d');
+  let w=eimg.width,h=eimg.height;const sc=Math.min(EC_MAX/w,EC_MAX/h,1);w=Math.round(w*sc);h=Math.round(h*sc);
+  cv.width=w;cv.height=h;strokes=[];redraw();$('modal').classList.add('on');};eimg.src=p.orig;}
+function redraw(){ex.clearRect(0,0,ec.width,ec.height);ex.drawImage(eimg,0,0,ec.width,ec.height);strokes.forEach(drawStroke);if(cur)drawStroke(cur);}
+function drawStroke(s){ex.strokeStyle=s.color;ex.lineWidth=Math.max(3,ec.width*0.008);ex.lineCap='round';ex.lineJoin='round';
+  if(s.tool==='circle'){ex.beginPath();ex.ellipse((s.x0+s.x1)/2,(s.y0+s.y1)/2,Math.abs(s.x1-s.x0)/2,Math.abs(s.y1-s.y0)/2,0,0,7);ex.stroke();}
+  else if(s.tool==='rect'){ex.strokeRect(s.x0,s.y0,s.x1-s.x0,s.y1-s.y0);}
+  else if(s.tool==='arrow'){ex.beginPath();ex.moveTo(s.x0,s.y0);ex.lineTo(s.x1,s.y1);ex.stroke();const a=Math.atan2(s.y1-s.y0,s.x1-s.x0),L=Math.max(14,ec.width*0.03);
+    ex.beginPath();ex.moveTo(s.x1,s.y1);ex.lineTo(s.x1-L*Math.cos(a-0.4),s.y1-L*Math.sin(a-0.4));ex.moveTo(s.x1,s.y1);ex.lineTo(s.x1-L*Math.cos(a+0.4),s.y1-L*Math.sin(a+0.4));ex.stroke();}
+  else if(s.tool==='pen'){ex.beginPath();s.pts.forEach((p,i)=>i?ex.lineTo(p.x,p.y):ex.moveTo(p.x,p.y));ex.stroke();}}
+function epos(ev){const r=ec.getBoundingClientRect(),t=ev.touches?ev.touches[0]:ev;return{x:(t.clientX-r.left)/r.width*ec.width,y:(t.clientY-r.top)/r.height*ec.height};}
+function edown(ev){const p=epos(ev);cur=etool==='pen'?{tool:'pen',color:ecolor,pts:[p]}:{tool:etool,color:ecolor,x0:p.x,y0:p.y,x1:p.x,y1:p.y};ev.preventDefault();}
+function emove(ev){if(!cur)return;const p=epos(ev);if(cur.tool==='pen')cur.pts.push(p);else{cur.x1=p.x;cur.y1=p.y;}redraw();ev.preventDefault();}
+function eup(){if(cur){strokes.push(cur);cur=null;redraw();}}
+['mousedown','touchstart'].forEach(e=>$('ecanvas').addEventListener(e,edown,{passive:false}));
+['mousemove','touchmove'].forEach(e=>$('ecanvas').addEventListener(e,emove,{passive:false}));
+['mouseup','touchend','mouseleave'].forEach(e=>$('ecanvas').addEventListener(e,eup));
+$('etools').querySelectorAll('[data-tool]').forEach(b=>b.onclick=()=>{etool=b.dataset.tool;$('etools').querySelectorAll('[data-tool]').forEach(x=>x.classList.remove('on'));b.classList.add('on');});
+['#e8322d','#1e9fe0','#f2b705','#283890','#1f9d6b'].forEach((c,i)=>{const el=document.createElement('div');el.className='c'+(i===0?' on':'');el.style.background=c;el.onclick=()=>{ecolor=c;$('ecolors').querySelectorAll('.c').forEach(x=>x.classList.remove('on'));el.classList.add('on');};$('ecolors').appendChild(el);});
+$('eundo').onclick=()=>{strokes.pop();redraw();};
+$('ecancel').onclick=()=>$('modal').classList.remove('on');
+$('edone').onclick=()=>{photos[idx].edited=ec.toDataURL('image/jpeg',0.9);$('modal').classList.remove('on');drawPhotos();toast('현장 표시 적용');};
+// 복명서
+function buildDoc(){
+  const title=kind==='현장 출장'?(($('ttl').value||'출 장 복 명 서')):'출 장 복 명 서';
+  let rows=[['출장자',$('who').value],['일시',$('when').value],['장소',$('where').value],['목적',$('purpose').value]];
+  if(kind==='위반건축물 출장'){rows.push(['위반행위',$('viol').value]);rows.push(['용도·구조·면적',$('struct').value]);}
+  rows.push(['처리내용',$('content').value]);
+  const ph=photos.length?`<div class="docph">${photos.map((p,i)=>`<figure><img src="${p.edited||p.orig}"><figcaption>사진 ${i+1}. ${esc(p.cap)||'&nbsp;'}</figcaption></figure>`).join('')}</div>`:'';
+  const d=new Date();const ds=`${d.getFullYear()}.  ${d.getMonth()+1}.  ${d.getDate()}.`;
+  $('doc').innerHTML=`<h3>${esc(title)}</h3><table class="f">${rows.map(r=>`<tr><th>${r[0]}</th><td>${esc(r[1])||'&nbsp;'}</td></tr>`).join('')}</table>${ph}
+    <div style="text-align:right;margin-top:16px;font-size:14px">위와 같이 출장 결과를 복명합니다.<br><br>${ds}<br>복명자 : ${esc($('who').value)} (서명 또는 인)</div>`;
+}
 $('print').onclick=()=>window.print();
+let tt;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),1500);}
 </script>
 </body>
 </html>
