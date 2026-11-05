@@ -7,131 +7,213 @@
 <title>민원서식 작성 도우미</title>
 <link rel="stylesheet" href="../gunpo.css">
 <style>
-  .seg{display:flex;flex-wrap:wrap;gap:6px;}
-  .seg button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--mut);}
-  .seg button.on{background:var(--navy);color:#fff;border-color:var(--navy);}
-  .steps{display:flex;gap:6px;margin-bottom:6px;}
-  .steps .s{flex:1;height:6px;border-radius:4px;background:var(--line);}
-  .steps .s.on{background:var(--blue);}
-  .q{font-size:17px;font-weight:800;color:var(--navy);margin:4px 0 12px;}
-  .formdoc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;}
-  .formdoc h3{text-align:center;font-size:19px;margin:0 0 14px;letter-spacing:4px;}
-  table.f{width:100%;border-collapse:collapse;}
-  table.f th,table.f td{border:1px solid #9aa7bd;padding:9px 10px;font-size:14px;vertical-align:middle;}
-  table.f th{background:var(--sky2);color:var(--navy);width:34%;text-align:left;font-weight:700;}
-  .sign{margin-top:18px;text-align:right;font-size:14px;}
-  .sign .d{margin-bottom:10px;}
-  @media print{body{background:#fff;}.gp-header,.card,.actionbar,.noprint,.row{display:none!important;}.wrap{max-width:none;padding:0;}}
+  .layout{display:grid;grid-template-columns:1fr;gap:14px;}
+  @media(min-width:760px){.layout{grid-template-columns:300px 1fr;align-items:start;}.wrap{max-width:1040px;}}
+  /* 단계 레일 */
+  .rail{background:linear-gradient(160deg,var(--navy),#1b2a6b);color:#fff;border-radius:16px;padding:16px;}
+  .rail h3{margin:0 0 2px;font-size:16px;font-weight:800;}
+  .rail .sub{font-size:12px;opacity:.85;margin-bottom:12px;}
+  .dots10{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+  .dots10 .d{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;font-weight:800;cursor:pointer;}
+  .dots10 .d.on{background:#fff;color:var(--navy);}
+  .dots10 .d.done{background:var(--blue);color:#fff;}
+  .dots10 .d small{font-size:8px;font-weight:600;line-height:1;margin-top:1px;opacity:.9;}
+  .qbox h4{margin:0 0 4px;font-size:18px;font-weight:800;}
+  .qbox .tip{background:rgba(255,255,255,.12);border-radius:10px;padding:9px 11px;font-size:12px;line-height:1.5;margin:8px 0 12px;}
+  .qbox label{color:#cfe0ff;}
+  .qbox input,.qbox select{margin-bottom:6px;}
+  .qbox .opts{display:flex;gap:6px;flex-wrap:wrap;}
+  .qbox .opt{border:1.5px solid rgba(255,255,255,.4);background:transparent;color:#fff;border-radius:8px;padding:8px 12px;font-size:13px;font-weight:700;}
+  .qbox .opt.on{background:#fff;color:var(--navy);border-color:#fff;}
+  .navbtns{display:flex;gap:8px;margin-top:12px;}
+  .navbtns button{flex:1;border-radius:10px;padding:11px;font-weight:800;border:0;font-size:14px;}
+  .navbtns .prev{background:rgba(255,255,255,.16);color:#fff;}
+  .navbtns .next{background:var(--blue);color:#fff;}
+  /* 여권 신청서 */
+  .doc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;overflow-x:auto;}
+  .ptitle{text-align:center;font-weight:900;font-size:20px;letter-spacing:8px;margin:2px 0 12px;}
+  table.p{width:100%;border-collapse:collapse;min-width:460px;}
+  table.p th,table.p td{border:1px solid #8a97ad;padding:6px 8px;font-size:13px;vertical-align:middle;}
+  table.p .sec{background:#fde8e4;color:#b23;font-weight:800;width:16px;writing-mode:vertical-rl;text-align:center;letter-spacing:2px;}
+  table.p .lab{background:var(--sky2);color:var(--navy);font-weight:700;white-space:nowrap;}
+  .checkrow{display:flex;gap:10px;flex-wrap:wrap;}
+  .checkrow span{font-size:13px;}
+  .checkrow b{color:var(--blue);}
+  .boxes{display:flex;gap:3px;}
+  .boxes .c{width:22px;height:26px;border:1px solid #8a97ad;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;}
+  .hl{background:#fff6cc;}
+  .sign{text-align:right;margin-top:14px;font-size:13px;}
+  @media print{body{background:#fff;}.gp-header,.rail,.card,.navbtns,.noprint{display:none!important;}.wrap{max-width:none;padding:0;}.layout{display:block;}.doc{border:0;}}
 </style>
 </head>
 <body>
 <div class="gp-header"><div class="in">
   <div class="gp-logo">군포</div>
-  <div style="flex:1"><h1>민원서식 작성 도우미</h1><div class="sub">답만 하면 서식이 채워져요</div></div>
+  <div style="flex:1"><h1>민원서식 작성 도우미</h1><div class="sub">여권발급신청서 · 질문에 답하면 실시간 완성</div></div>
   <a class="back" href="../gunpo/">← 도구</a>
 </div></div>
 
 <div class="wrap">
-  <div class="card noprint">
-    <h2><span class="dot"></span>어떤 서식인가요?</h2>
-    <div class="seg" id="kind">
-      <button data-k="general" class="on">일반 민원신청서</button>
-      <button data-k="fact">사실증명 신청서</button>
-      <button data-k="civil">건의·제안서</button>
+  <div class="layout">
+    <!-- 단계 레일 -->
+    <div class="rail noprint">
+      <h3 id="stepTitle">1단계 · 여권 선택</h3>
+      <div class="sub" id="stepNo">신청서 작성 · 진행 1 / 10</div>
+      <div class="dots10" id="dots"></div>
+      <div class="qbox" id="qbox"></div>
+      <div class="navbtns">
+        <button class="prev" id="prev">이전</button>
+        <button class="next" id="next">다음</button>
+      </div>
+      <p style="font-size:11px;opacity:.8;margin-top:10px">입력값은 이 기기 안에서만 서식에 채워지고 저장·전송되지 않아요. 사용 후 ‘처음부터’로 지울 수 있어요.</p>
     </div>
-  </div>
 
-  <div class="card noprint" id="wizard">
-    <div class="steps" id="steps"></div>
-    <div class="q" id="qtext"></div>
-    <div id="qinput"></div>
-    <div class="row" style="margin-top:14px">
-      <button class="btn ghost" id="back" style="flex:0 0 auto">이전</button>
-      <button class="btn primary" id="nextBtn">다음</button>
-    </div>
-    <p class="muted" style="margin-top:8px">개인정보는 이 기기 안에서만 서식에 채워지고, 전송되지 않아요.</p>
+    <!-- 신청서 -->
+    <div class="doc" id="doc"></div>
   </div>
-
-  <div class="card" id="resultCard" style="display:none">
-    <h2 class="noprint"><span class="dot"></span>완성된 서식</h2>
-    <div class="formdoc" id="doc"></div>
-    <div class="row noprint" style="margin-top:12px">
-      <button class="btn ghost" id="edit" style="flex:0 0 auto">수정</button>
-      <button class="btn primary" id="print">🖨️ 인쇄 / PDF 저장</button>
-    </div>
+  <div class="row noprint" style="margin-top:12px">
+    <button class="btn ghost" id="reset" style="flex:0 0 auto">처음부터</button>
+    <button class="btn primary" id="print">🖨️ 인쇄 / PDF 저장</button>
   </div>
 </div>
 
 <script>
 const $=id=>document.getElementById(id);
-const FORMS={
-  general:{title:'민 원 신 청 서', q:[
-    {k:'name',t:'신청인 성함이 어떻게 되세요?',ph:'홍길동'},
-    {k:'birth',t:'생년월일을 알려주세요.',ph:'1990-01-01'},
-    {k:'addr',t:'주소를 적어주세요.',ph:'군포시 ...'},
-    {k:'tel',t:'연락처를 적어주세요.',ph:'010-0000-0000'},
-    {k:'subject',t:'신청(민원) 제목은?',ph:'예: 도로 보수 요청'},
-    {k:'content',t:'민원 내용을 적어주세요.',ph:'자세히 적을수록 처리가 빨라요.',area:true},
-  ]},
-  fact:{title:'사 실 증 명 신 청 서', q:[
-    {k:'name',t:'신청인 성함이 어떻게 되세요?',ph:'홍길동'},
-    {k:'birth',t:'생년월일을 알려주세요.',ph:'1990-01-01'},
-    {k:'addr',t:'주소를 적어주세요.',ph:'군포시 ...'},
-    {k:'tel',t:'연락처를 적어주세요.',ph:'010-0000-0000'},
-    {k:'subject',t:'어떤 사실의 증명이 필요하세요?',ph:'예: 거주사실 증명'},
-    {k:'use',t:'용도(제출처)는 어디인가요?',ph:'예: 학교 제출용'},
-    {k:'count',t:'필요한 통수는?',ph:'예: 2통'},
-  ]},
-  civil:{title:'시 정 건 의 · 제 안 서', q:[
-    {k:'name',t:'제안하시는 분 성함은?',ph:'홍길동'},
-    {k:'tel',t:'연락처를 적어주세요.',ph:'010-0000-0000'},
-    {k:'subject',t:'제안 제목은?',ph:'예: 도서관 야간 개방'},
-    {k:'now',t:'현재 상황(문제점)은 무엇인가요?',ph:'',area:true},
-    {k:'idea',t:'어떻게 바뀌면 좋을까요?',ph:'',area:true},
-    {k:'effect',t:'기대 효과가 있다면?',ph:'',area:true},
-  ]},
+const STEPS=[
+  {t:'여권 선택',render:s_sel},
+  {t:'신청인',render:s_person},
+  {t:'여권정보',render:s_passport},
+  {t:'기존 여권',render:s_old},
+  {t:'로마자',render:s_roman},
+  {t:'긴급연락',render:s_emerg},
+  {t:'추가기재',render:s_extra},
+  {t:'수정 확인',render:s_check},
+  {t:'서명',render:s_sign},
+  {t:'완료',render:s_done},
+];
+const SHORT=['선택','신청','여권','기존','로마자','긴급','추가','수정','서명','완료'];
+let step=0;
+const D={
+  ptype:'일반', period:'10년', pages:'58면',
+  name:'', jumin:'', tel:'',
+  reissue:'신규', oldno:'',
+  rname:'', rfirst:'',
+  ename:'', erel:'', etel:'',
+  addr:'', postal:'없음',
+  agree:false, signer:''
 };
-const LABELS={name:'성명',birth:'생년월일',addr:'주소',tel:'연락처',subject:'제목',content:'신청내용',
-  use:'용도',count:'필요통수',now:'현황·문제점',idea:'제안내용',effect:'기대효과'};
-let kind='general', step=0, data={};
+function load(){try{Object.assign(D,JSON.parse(localStorage.getItem('gp_minwon')||'{}'));}catch(e){}}
+function save(){try{localStorage.setItem('gp_minwon',JSON.stringify(D));}catch(e){}}
+load();
 
-function startForm(){step=0;data={};renderStep();}
+/* ---- 단계 화면들 ---- */
+function opt(key,val,cur){return `<button class="opt${cur===val?' on':''}" data-k="${key}" data-v="${val}">${val}</button>`;}
+function s_sel(){return `
+  <h4>어떤 여권인가요?</h4>
+  <label>여권 종류</label><div class="opts">${['일반','관용','외교관','여행증명서'].map(v=>opt('ptype',v,D.ptype)).join('')}</div>
+  <label>유효기간</label><div class="opts">${['10년','5년','단수(1년)'].map(v=>opt('period',v,D.period)).join('')}</div>
+  <label>면수</label><div class="opts">${['58면','26면'].map(v=>opt('pages',v,D.pages)).join('')}</div>`;}
+function s_person(){return `
+  <h4>신청인의 기본 정보를 적어 주세요</h4>
+  <div class="tip">💡 신분증과 한 글자도 다르지 않아야 접수됩니다.</div>
+  <label>한글 성명 (필수)</label><input type="text" id="f_name" value="${esc(D.name)}" placeholder="홍길동">
+  <label>주민등록번호 (필수)</label><input type="text" id="f_jumin" inputmode="numeric" value="${esc(D.jumin)}" placeholder="앞 6자리-뒤 7자리">
+  <label>본인 연락처 (필수)</label><input type="text" id="f_tel" inputmode="numeric" value="${esc(D.tel)}" placeholder="010-0000-0000">`;}
+function s_passport(){return `
+  <h4>여권 사진·면수는 확인하셨나요?</h4>
+  <div class="tip">사진은 6개월 이내 촬영한 여권 규격(가로 3.5 × 세로 4.5cm)이어야 해요.</div>
+  <label>여권 면수 재확인</label><div class="opts">${['58면','26면'].map(v=>opt('pages',v,D.pages)).join('')}</div>
+  <label>유효기간 재확인</label><div class="opts">${['10년','5년','단수(1년)'].map(v=>opt('period',v,D.period)).join('')}</div>`;}
+function s_old(){return `
+  <h4>여권을 처음 만드세요?</h4>
+  <label>발급 구분</label><div class="opts">${['신규','재발급','기간연장'].map(v=>opt('reissue',v,D.reissue)).join('')}</div>
+  ${D.reissue!=='신규'?`<label>기존 여권번호</label><input type="text" id="f_oldno" value="${esc(D.oldno)}" placeholder="M12345678">`:''}`;}
+function s_roman(){return `
+  <h4>로마자 성명을 적어 주세요</h4>
+  <div class="tip">기존 여권이 있으면 그 여권과 똑같이 적어야 해요.</div>
+  <label>로마자 성 (예: HONG)</label><input type="text" id="f_rname" value="${esc(D.rname)}" placeholder="HONG" style="text-transform:uppercase">
+  <label>로마자 이름 (예: GILDONG)</label><input type="text" id="f_rfirst" value="${esc(D.rfirst)}" placeholder="GILDONG" style="text-transform:uppercase">`;}
+function s_emerg(){return `
+  <h4>긴급 연락처 (국내)</h4>
+  <div class="tip">본인과 연락이 안 될 때 연락할 가족 등을 적어요.</div>
+  <label>성명</label><input type="text" id="f_ename" value="${esc(D.ename)}" placeholder="홍판서">
+  <label>관계</label><input type="text" id="f_erel" value="${esc(D.erel)}" placeholder="부">
+  <label>전화번호</label><input type="text" id="f_etel" inputmode="numeric" value="${esc(D.etel)}" placeholder="010-0000-0000">`;}
+function s_extra(){return `
+  <h4>선택 기재 사항</h4>
+  <label>주소 (선택)</label><input type="text" id="f_addr" value="${esc(D.addr)}" placeholder="군포시 ...">
+  <label>우편물 받기</label><div class="opts">${['없음','희망'].map(v=>opt('postal',v,D.postal)).join('')}</div>`;}
+function s_check(){return `
+  <h4>적은 내용을 확인하세요</h4>
+  <div class="tip">오른쪽 신청서에서 <b style="color:#fff">노란색</b>으로 표시된 칸이 지금까지 입력한 내용이에요. 틀린 곳이 있으면 위 단계 번호를 눌러 고치세요.</div>
+  <label>빠진 필수 항목</label>
+  <div style="font-size:13px;line-height:1.7">${missing().length?missing().map(m=>'• '+m).join('<br>'):'✅ 필수 항목이 모두 채워졌어요.'}</div>`;}
+function s_sign(){return `
+  <h4>서명</h4>
+  <div class="tip">신청서 하단 서명란에 넣을 이름이에요. 실제 제출 시엔 자필 서명이 필요해요.</div>
+  <label>서명자 성명</label><input type="text" id="f_signer" value="${esc(D.signer||D.name)}" placeholder="${esc(D.name)||'홍길동'}">
+  <label><input type="checkbox" id="f_agree" ${D.agree?'checked':''} style="width:auto;margin-right:6px">위 기재사항이 사실임을 확인합니다</label>`;}
+function s_done(){const m=missing();return `
+  <h4>${m.length?'거의 다 됐어요':'작성 완료!'}</h4>
+  <div class="tip">${m.length?('아직 빠진 항목: '+m.join(', ')):'오른쪽 신청서를 인쇄하거나 PDF로 저장해 제출용으로 쓰세요.'}</div>
+  <p style="font-size:13px">아래 <b>인쇄 / PDF 저장</b> 버튼으로 신청서를 출력할 수 있어요.<br>제출 전 여권사진·신분증을 함께 준비하세요.</p>`;}
+
+function missing(){const m=[];if(!D.name)m.push('한글 성명');if(!D.jumin)m.push('주민등록번호');if(!D.tel)m.push('본인 연락처');if(!D.rname||!D.rfirst)m.push('로마자 성명');return m;}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+
+/* ---- 신청서 렌더 ---- */
+function charBoxes(str,len,hl){str=(str||'').toString();let h='<div class="boxes">';for(let i=0;i<len;i++)h+=`<div class="c${hl&&str[i]?' hl':''}">${str[i]||''}</div>`;return h+'</div>';}
+function chk(v,on){return (v===on?'☑':'☐')+' '+on;}
+function renderDoc(){
+  const jumin=D.jumin.replace(/[^0-9]/g,'');
+  $('doc').innerHTML=`
+  <div class="ptitle">여 권 발 급 신 청 서</div>
+  <table class="p">
+    <tr><td class="sec" rowspan="2">여권선택란</td><td class="lab">여권 종류</td>
+      <td><span class="checkrow">${['일반','관용','외교관','여행증명서'].map(v=>`<span>${chk(D.ptype,v).replace(v,'<b>'+v+'</b>')}</span>`).join('')}</span></td></tr>
+    <tr><td class="lab">여권 기간 / 면수</td><td><span class="checkrow">${['10년','5년','단수(1년)'].map(v=>`<span>${chk(D.period,v)}</span>`).join('')} · ${D.pages}</span></td></tr>
+    <tr><td class="sec" rowspan="3">필수기재란</td><td class="lab">한글성명</td><td>${charBoxes(D.name,8,true)}</td></tr>
+    <tr><td class="lab">주민등록번호</td><td style="display:flex;gap:6px;align-items:center">${charBoxes(jumin.slice(0,6),6,true)}<b>-</b>${charBoxes(jumin.slice(6),7,true)}</td></tr>
+    <tr><td class="lab">본인연락처</td><td class="${D.tel?'hl':''}" style="font-weight:700">${esc(D.tel)||'&nbsp;'}</td></tr>
+    <tr><td class="sec" rowspan="2">긴급연락처</td><td class="lab">성명 / 관계</td><td class="${D.ename?'hl':''}">${esc(D.ename)} ${D.erel?'('+esc(D.erel)+')':''}</td></tr>
+    <tr><td class="lab">전화번호</td><td class="${D.etel?'hl':''}">${esc(D.etel)||'&nbsp;'}</td></tr>
+    <tr><td class="sec" rowspan="2">추가기재란</td><td class="lab">로마자 성</td><td>${charBoxes(D.rname,10,true)}</td></tr>
+    <tr><td class="lab">로마자 이름</td><td>${charBoxes(D.rfirst,12,true)}</td></tr>
+    <tr><td class="sec">발급구분</td><td class="lab">신규/재발급</td><td class="${D.reissue?'hl':''}">${chk(D.reissue,D.reissue)} ${D.oldno?' · 기존 '+esc(D.oldno):''}</td></tr>
+    <tr><td class="sec">선택기재란</td><td class="lab">주소 / 우편물</td><td class="${D.addr?'hl':''}">${esc(D.addr)} ${D.postal==='희망'?' · 우편 희망':''}</td></tr>
+  </table>
+  <div class="sign">
+    위 기재사항이 사실임을 확인하며 여권 발급을 신청합니다.<br><br>
+    ${new Date().getFullYear()}.  ${new Date().getMonth()+1}.  ${new Date().getDate()}.<br>
+    신청인 : <b class="${D.signer?'hl':''}">${esc(D.signer||D.name)}</b> (서명 또는 인)
+  </div>
+  <div class="muted" style="margin-top:8px">외교부장관 귀하 — 제출 전 군포시 담당부서 안내를 확인하세요.</div>`;
+}
+
 function renderStep(){
-  const f=FORMS[kind];const n=f.q.length;
-  $('steps').innerHTML=f.q.map((_,i)=>`<div class="s${i<=step?' on':''}"></div>`).join('');
-  const q=f.q[step];
-  $('qtext').textContent=`(${step+1}/${n}) ${q.t}`;
-  const v=data[q.k]||'';
-  $('qinput').innerHTML = q.area
-    ? `<textarea id="ans" placeholder="${q.ph||''}">${v}</textarea>`
-    : `<input type="text" id="ans" placeholder="${q.ph||''}" value="${v.replace(/"/g,'&quot;')}">`;
-  $('ans').focus();
-  $('back').style.visibility=step===0?'hidden':'visible';
-  $('nextBtn').textContent = step===n-1?'완성하기':'다음';
+  $('stepTitle').textContent=(step+1)+'단계 · '+STEPS[step].t;
+  $('stepNo').textContent='신청서 작성 · 진행 '+(step+1)+' / 10';
+  $('dots').innerHTML=STEPS.map((s,i)=>`<div class="d ${i===step?'on':(i<step?'done':'')}" data-i="${i}">${i<step?'✓':i+1}<small>${SHORT[i]}</small></div>`).join('');
+  $('dots').querySelectorAll('.d').forEach(d=>d.onclick=()=>{step=+d.dataset.i;renderStep();});
+  $('qbox').innerHTML=STEPS[step].render();
+  bindStep();
+  $('prev').style.visibility=step===0?'hidden':'visible';
+  $('next').textContent=step===STEPS.length-1?'처음으로':'다음';
+  renderDoc();
 }
-$('nextBtn').onclick=()=>{
-  const f=FORMS[kind];data[f.q[step].k]=$('ans').value.trim();
-  if(step<f.q.length-1){step++;renderStep();}else finish();
-};
-$('back').onclick=()=>{if(step>0){data[FORMS[kind].q[step].k]=$('ans').value;step--;renderStep();}};
-document.querySelectorAll('#kind button').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('#kind button').forEach(x=>x.classList.remove('on'));b.classList.add('on');kind=b.dataset.k;
-  $('wizard').style.display='block';$('resultCard').style.display='none';startForm();});
-function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\n/g,'<br>');}
-function finish(){
-  const f=FORMS[kind];
-  let rows=f.q.map(q=>`<tr><th>${LABELS[q.k]||q.k}</th><td>${esc(data[q.k])||'&nbsp;'}</td></tr>`).join('');
-  const today=new Date();const ds=`${today.getFullYear()}.  ${today.getMonth()+1}.  ${today.getDate()}.`;
-  const nm=esc(data.name)||'';
-  $('doc').innerHTML=`<h3>${f.title}</h3><table class="f">${rows}</table>
-    <div class="sign"><div class="d">${ds}</div>신청인 : ${nm} (서명 또는 인)</div>
-    <div class="muted" style="margin-top:10px">※ 군포시장 귀하 — 실제 제출 전 담당부서 양식을 한 번 확인하세요.</div>`;
-  $('wizard').style.display='none';$('resultCard').style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
+function bindStep(){
+  // option buttons
+  $('qbox').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{D[b.dataset.k]=b.dataset.v;save();renderStep();});
+  // text fields
+  const map={f_name:'name',f_jumin:'jumin',f_tel:'tel',f_oldno:'oldno',f_rname:'rname',f_rfirst:'rfirst',f_ename:'ename',f_erel:'erel',f_etel:'etel',f_addr:'addr',f_signer:'signer'};
+  Object.keys(map).forEach(id=>{const el=$(id);if(el)el.addEventListener('input',e=>{let v=e.target.value;if(id==='f_jumin')v=v.replace(/[^0-9-]/g,'');if(id==='f_rname'||id==='f_rfirst')v=v.toUpperCase();D[map[id]]=v;save();renderDoc();});});
+  const ag=$('f_agree');if(ag)ag.addEventListener('change',e=>{D.agree=e.target.checked;save();});
 }
-$('edit').onclick=()=>{$('wizard').style.display='block';$('resultCard').style.display='none';step=0;renderStep();};
+$('prev').onclick=()=>{if(step>0){step--;renderStep();}};
+$('next').onclick=()=>{if(step<STEPS.length-1){step++;renderStep();}else{step=0;renderStep();}};
+$('reset').onclick=()=>{if(confirm('입력한 내용을 모두 지울까요?')){localStorage.removeItem('gp_minwon');location.reload();}};
 $('print').onclick=()=>window.print();
-startForm();
+renderStep();
 </script>
 </body>
 </html>
