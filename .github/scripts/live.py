@@ -5,7 +5,7 @@ import json, urllib.request, urllib.parse, datetime, os, re, time, subprocess
 
 KST = datetime.timezone(datetime.timedelta(hours=9))
 # 편명: (출발일 현지 연,월,일, 인천 출발편이면 True)
-FLIGHTS = {"ET672": (2026, 11, 6, True), "ET673": (2026, 11, 8, False)}
+FLIGHTS = {"ET672": (2026, 11, 6, "ICN"), "ET673": (2026, 11, 8, "NRT")}   # 편명: (현지 출발일, 출발 공항)
 WIN_BEFORE_H, WIN_AFTER_H = 8, 4          # 출발 8시간 전 ~ 도착 4시간 후만 확인
 LOOP_MIN = int(os.environ.get("LOOP_MIN", "0"))  # 0이면 한 번만
 POLL_SEC = 300
@@ -17,11 +17,21 @@ ST_KO = {"Scheduled": "예정", "Departed": "출발함", "En Route": "비행 중
 
 def now(): return datetime.datetime.now(KST)
 
-def flightstats(fno, y, m, d):
-    url = f"https://www.flightstats.com/v2/flight-tracker/{fno[:2]}/{fno[2:]}?year={y}&month={m}&date={d}"
+def fs_page(url):
     h = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=30).read().decode("utf-8", "ignore")
-    j = json.loads(re.search(r'__NEXT_DATA__ = (\{.*?\});\s*__NEXT_LOADED', h, re.S).group(1))
-    f = j["props"]["initialState"]["flightTracker"]["flight"]
+    return json.loads(re.search(r'__NEXT_DATA__ = (\{.*?\});\s*__NEXT_LOADED', h, re.S).group(1))["props"]["initialState"]["flightTracker"]
+
+def flightstats(fno, y, m, d, apt):
+    ft = fs_page(f"https://www.flightstats.com/v2/flight-tracker/{fno[:2]}/{fno[2:]}?year={y}&month={m}&date={d}")
+    f = ft["flight"]
+    if ((f.get("departureAirport") or {}).get("iata")) != apt:   # 여러 구간 편(예: 아디스아바바→인천→나리타)은 우리 구간을 골라서 다시
+        url = None
+        for day in ft.get("otherDays") or []:
+            if day.get("date1", "").startswith(f"{d:02d}-"):
+                for x in day.get("flights") or []:
+                    if (x.get("departureAirport") or {}).get("iata") == apt: url = x.get("url")
+        if not url: raise Exception(f"{apt} 출발 구간을 못 찾음")
+        f = fs_page("https://www.flightstats.com/v2" + url)["flight"]
     st, sc = f.get("status") or {}, f.get("schedule") or {}
     dep, arr = f.get("departureAirport") or {}, f.get("arrivalAirport") or {}
     dl = st.get("delay") or {}
@@ -49,10 +59,10 @@ def icn_dep(fno, y, m, d):
     rows = [r for r in json.loads(urllib.request.urlopen(req, timeout=30).read().decode("utf-8"))["scheduleList"] if r.get("fnumber") == fno]
     return rows[0] if rows else {}
 
-def build(fno, y, m, d, icn):
-    fs = flightstats(fno, y, m, d)
+def build(fno, y, m, d, apt):
+    fs = flightstats(fno, y, m, d, apt)
     r = {}
-    if icn:
+    if apt == "ICN":
         try: r = icn_dep(fno, y, m, d)
         except Exception as e: print("인천공항 실패", fno, e)
     status = ST_KO.get(fs["st"], fs["st"])
@@ -85,8 +95,8 @@ def msg(fno, old, new):
 def push(text):
     if not NTFY or not text: return
     try:
-        urllib.request.urlopen(urllib.request.Request("https://ntfy.sh/" + NTFY, data=text.encode("utf-8"),
-            headers={"Title": "여행 앱 항공 알림", "Tags": "airplane", "Priority": "high"}), timeout=20)
+        body = json.dumps({"topic": NTFY, "title": "여행 앱 항공 알림", "message": text, "tags": ["airplane"], "priority": 4}).encode("utf-8")
+        urllib.request.urlopen(urllib.request.Request("https://ntfy.sh/", data=body, headers={"Content-Type": "application/json"}), timeout=20)
         print("알림 보냄", text)
     except Exception as e: print("알림 실패", e)
 
@@ -97,8 +107,8 @@ def once():
     try: live = json.load(open(PATH, encoding="utf-8"))
     except Exception: live = {}
     changed, active = False, False
-    for fno, (y, m, d, icn) in FLIGHTS.items():
-        try: new = build(fno, y, m, d, icn)
+    for fno, (y, m, d, apt) in FLIGHTS.items():
+        try: new = build(fno, y, m, d, apt)
         except Exception as e: print("실패", fno, e); continue
         old = live.get(fno, {})
         same = {k: v for k, v in new.items()} == {k: v for k, v in old.items() if k not in ("at", "chkAt")}
@@ -115,7 +125,7 @@ def once():
 
 def active_now():
     t = now()
-    for fno, (y, m, d, icn) in FLIGHTS.items():
+    for fno, (y, m, d, apt) in FLIGHTS.items():
         a = datetime.datetime(y, m, d, 0, 0, tzinfo=KST) - datetime.timedelta(hours=WIN_BEFORE_H)
         b = datetime.datetime(y, m, d, 23, 59, tzinfo=KST) + datetime.timedelta(hours=WIN_AFTER_H)
         if a <= t <= b: return True
