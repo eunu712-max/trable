@@ -1,7 +1,7 @@
 // 사진은 한 번 받으면 폰에 저장해 두고 바로 보여줌 (다음부터 인터넷 없어도 보임)
 // 앱 화면(html)도 열 때마다 최신본을 저장 → 비행기 모드·인터넷 없을 때는 저장본으로 열림
 const C="trip-img-v1",P="trip-page-v3";
-self.addEventListener("install",e=>{self.skipWaiting();e.waitUntil(caches.open(P).then(c=>Promise.all(["tokyo.html","tokyo-us.html"].map(f=>{const u=new URL(f,self.registration.scope).href;return fetch(u,{cache:"no-store"}).then(n=>{if(n.ok)return c.put(u,n)}).catch(()=>{})}))))});
+self.addEventListener("install",e=>{self.skipWaiting();e.waitUntil(caches.open(P).then(c=>Promise.all(["tokyo.html","tokyo-us.html","greece.html"].map(f=>{const u=new URL(f,self.registration.scope).href;return fetch(u,{cache:"no-store"}).then(n=>{if(n.ok)return c.put(u,n)}).catch(()=>{})}))))});
 self.addEventListener("activate",e=>e.waitUntil(self.clients.claim()));
 self.addEventListener("fetch",e=>{
   const r=e.request;if(r.method!=="GET")return;

@@ -5,7 +5,8 @@ import json, urllib.request, urllib.parse, datetime, os, re, time, subprocess
 
 KST = datetime.timezone(datetime.timedelta(hours=9))
 # 편명: (출발일 현지 연,월,일, 인천 출발편이면 True)
-FLIGHTS = {"ET672": (2026, 11, 6, "ICN"), "ET673": (2026, 11, 8, "NRT")}   # 편명: (현지 출발일, 출발 공항)
+FLIGHTS = {"ET672": (2026, 11, 6, "ICN"), "ET673": (2026, 11, 8, "NRT"),
+           "CA124": (2027, 7, 31, "ICN"), "CA863": (2027, 8, 1, "PEK"), "CA864": (2027, 8, 8, "ATH"), "CA125": (2027, 8, 9, "PEK")}   # 편명: (현지 출발일, 출발 공항)
 WIN_BEFORE_H, WIN_AFTER_H = 8, 4          # 출발 8시간 전 ~ 도착 4시간 후만 확인
 LOOP_MIN = int(os.environ.get("LOOP_MIN", "0"))  # 0이면 한 번만
 POLL_SEC = 300
